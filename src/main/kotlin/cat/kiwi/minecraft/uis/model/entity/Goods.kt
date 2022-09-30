@@ -11,7 +11,7 @@ data class Goods(
     val price: Double,
     val itemInfo: String,
     val itemTag: String,
-    val displayName: String,
+    val description: String,
     val beenSold: Boolean,
     val createDate: Date,
     val dealDate: Date,

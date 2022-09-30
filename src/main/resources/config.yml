@@ -1,6 +1,6 @@
 dataSource:
   driver: mysql
   prefix: uis_
-  url: jdbc:mysql://172.30.50.81:3390/sbtest
-  user: root
-  password: z9Kp2P5@g&T3#6kH8+
+  url: jdbc:mysql://localhost:3306/minecraft
+  user: uis
+  password: uis

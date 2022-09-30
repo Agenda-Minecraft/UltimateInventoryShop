@@ -23,7 +23,7 @@ interface InitDBMapper {
             "  `price` decimal(10, 2) NOT NULL,\n" +
             "  `itemInfo` text CHARACTER SET utf8 COLLATE utf8_bin NOT NULL,\n" +
             "  `itemTag` varchar(40) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL,\n" +
-            "  `displayName` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL,\n" +
+            "  `description` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL,\n" +
             "  `beensold` tinyint(1) NOT NULL,\n" +
             "  `createdate` datetime NOT NULL,\n" +
             "  `dealdate` datetime NOT NULL,"+
@@ -31,7 +31,7 @@ interface InitDBMapper {
             ") ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_bin ROW_FORMAT = Compact;\n")
     fun createTable(tableName: String = "${Config.tablePrefix}goods")
 
-    @Select("CREATE INDEX goods_index ON \${tableName} (id, puttername, putteruid, callername, calleruid, itemTag, displayName)")
+    @Select("CREATE INDEX goods_index ON \${tableName} (id, puttername, putteruid, callername, calleruid, itemTag, description)")
     fun createTableIndex(tableName: String = "${Config.tablePrefix}goods")
 
 }
