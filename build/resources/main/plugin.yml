@@ -1,0 +1,6 @@
+name: UltimateInventoryShop
+version: 0.0.1
+main: cat.kiwi.minecraft.uis.UltimateInventoryShopPlugin
+load: STARTUP
+authors: [ moeKiwiSAMA ]
+description: UltimateShop
