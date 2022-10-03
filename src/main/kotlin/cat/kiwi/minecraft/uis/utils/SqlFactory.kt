@@ -1,11 +1,13 @@
 package cat.kiwi.minecraft.uis.utils
 
 import cat.kiwi.minecraft.uis.UltimateInventoryShopPlugin
+import cat.kiwi.minecraft.uis.mapper.GoodsMapper
 import cat.kiwi.minecraft.uis.mapper.InitDBMapper
 import org.apache.ibatis.datasource.pooled.PooledDataSource
 import org.apache.ibatis.mapping.Environment
 import org.apache.ibatis.session.Configuration
 import org.apache.ibatis.session.SqlSession
+import org.apache.ibatis.session.SqlSessionFactory
 import org.apache.ibatis.session.SqlSessionFactoryBuilder
 import org.apache.ibatis.transaction.TransactionFactory
 import org.apache.ibatis.transaction.jdbc.JdbcTransactionFactory
@@ -18,11 +20,17 @@ object SqlFactory {
         val dataSource: DataSource = getDataSource()
         val transactionFactory: TransactionFactory = JdbcTransactionFactory()
         val environment = Environment("development", transactionFactory, dataSource)
-        val configuration = Configuration(environment)
-        configuration.addMapper(InitDBMapper::class.java)
+        val configuration = getConfiguration(environment)
+
         val sqlSessionFactory = SqlSessionFactoryBuilder().build(configuration)
 
         return sqlSessionFactory.openSession()
+    }
+    private fun getConfiguration(environment: Environment): Configuration {
+        val configuration = Configuration(environment)
+        configuration.addMapper(InitDBMapper::class.java)
+        configuration.addMapper(GoodsMapper::class.java)
+        return configuration
     }
 
     private fun getDataSource(): DataSource {
@@ -46,5 +54,25 @@ object SqlFactory {
         ds.username = user
         ds.password = password
         return ds
+    }
+    fun getSqlSessionWithoutBukkit(): SqlSession {
+        val ds = PooledDataSource()
+        ds.driver = "com.mysql.jdbc.Driver"
+        ds.url = "jdbc:mysql://172.30.50.81:3900/uis?useUnicode=true&characterEncoding=utf-8&useSSL=false&serverTimezone=UTC"
+        ds.username = "root"
+        ds.password = "z9Kp2P5@g&T3#6kH8+"
+        val dataSource: DataSource = getDataSource()
+        val transactionFactory: TransactionFactory = JdbcTransactionFactory()
+        val environment = Environment("development", transactionFactory, dataSource)
+        val configuration = getConfiguration(environment)
+
+        val sqlSessionFactory = SqlSessionFactoryBuilder().build(configuration)
+
+        return sqlSessionFactory.openSession()
+    }
+
+    @JvmStatic
+    fun main(args: Array<String>) {
+
     }
 }

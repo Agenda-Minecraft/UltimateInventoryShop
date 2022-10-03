@@ -2,7 +2,7 @@ package cat.kiwi.minecraft.uis.model.entity
 
 import java.util.*
 
-data class Goods(
+data class Good(
     val id: String,
     val putterName: String,
     val putterUid: String,
@@ -15,5 +15,5 @@ data class Goods(
     val beenSold: Boolean,
     val createDate: Date,
     val dealDate: Date,
-    val meta: String?
+    val meta: String
 )

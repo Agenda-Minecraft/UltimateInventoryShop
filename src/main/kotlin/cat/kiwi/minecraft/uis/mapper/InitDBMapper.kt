@@ -16,17 +16,17 @@ interface InitDBMapper {
 
     @Select("CREATE TABLE IF NOT EXISTS \${tableName}  (\n" +
             "  `id` varchar(36) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL,\n" +
-            "  `puttername` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL,\n" +
-            "  `putteruid` varchar(36) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL,\n" +
-            "  `callername` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL,\n" +
-            "  `calleruid` varchar(36) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL,\n" +
+            "  `putter_name` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL,\n" +
+            "  `putter_uid` varchar(36) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL,\n" +
+            "  `caller_name` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL,\n" +
+            "  `caller_uid` varchar(36) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL,\n" +
             "  `price` decimal(10, 2) NOT NULL,\n" +
-            "  `itemInfo` text CHARACTER SET utf8 COLLATE utf8_bin NOT NULL,\n" +
-            "  `itemTag` varchar(40) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL,\n" +
+            "  `item_info` text CHARACTER SET utf8 COLLATE utf8_bin NOT NULL,\n" +
+            "  `item_tag` varchar(40) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL,\n" +
             "  `description` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL,\n" +
-            "  `beensold` tinyint(1) NOT NULL,\n" +
-            "  `createdate` datetime NOT NULL,\n" +
-            "  `dealdate` datetime NOT NULL,"+
+            "  `been_sold` tinyint(1) NOT NULL,\n" +
+            "  `create_date` datetime NOT NULL,\n" +
+            "  `deal_date` datetime NOT NULL,"+
             "  `meta` text CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NULL\n" +
             ") ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_bin ROW_FORMAT = Compact;\n")
     fun createTable(tableName: String = "${Config.tablePrefix}goods")

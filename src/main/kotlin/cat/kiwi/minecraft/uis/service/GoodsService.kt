@@ -1,21 +1,26 @@
 package cat.kiwi.minecraft.uis.service
 
-import cat.kiwi.minecraft.uis.model.entity.Goods
-import cat.kiwi.minecraft.uis.model.page.GoodsPage
+import cat.kiwi.minecraft.uis.model.entity.Good
+import com.github.pagehelper.Page
+import com.github.pagehelper.PageInfo
 import org.bukkit.entity.Player
 import org.bukkit.inventory.ItemStack
 
 interface GoodsService {
-    fun getAllGoods(index: Int): GoodsPage
+    fun sellGoods(player: Player, goods: ItemStack, price: Double, description: String)
 
-    fun getGoodsByPlayer(index: Int, player: Player): GoodsPage
+    fun getAllGoods(index: Int, beenSold: Boolean = false): List<Good>
 
-    fun getGoodsByType(index: Int, type: String): GoodsPage
+    fun getGoodsByIndex(index: Int, beenSold: Boolean = false): PageInfo<Good>
 
-    fun sellGoods(player: Player, goods: ItemStack, price: Int)
+    fun getGoodsByPlayer(index: Int, player: Player, beenSold: Boolean = false): PageInfo<Good>
+
+    fun getGoodsByType(index: Int, type: String, beenSold: Boolean = false): PageInfo<Good>
 
     fun buyGoods(player: Player, goodUid: String)
 
     fun deleteGoods(player: Player, goodUid: String)
+
+    fun queryGoods(goodUid: String): Good
 
 }
