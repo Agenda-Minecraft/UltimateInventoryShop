@@ -4,3 +4,11 @@ main: cat.kiwi.minecraft.uis.UltimateInventoryShopPlugin
 load: STARTUP
 authors: [ moeKiwiSAMA ]
 description: UltimateShop
+api-version: 1.19
+commands:
+  uis:
+    description: Ultimate Inventory Shop
+    usage: /uis help
+  ultimateinventoryshop:
+    description: Ultimate Inventory Shop
+    usage: /uis help

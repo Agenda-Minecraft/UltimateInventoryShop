@@ -1,7 +1,8 @@
 package cat.kiwi.minecraft.uis
 
 
-import cat.kiwi.minecraft.uis.config.Config
+import cat.kiwi.minecraft.uis.command.UISCommands
+import cat.kiwi.minecraft.uis.config.ConfigLoader
 import cat.kiwi.minecraft.uis.utils.SqlFactory
 import org.apache.ibatis.session.SqlSession
 import org.bukkit.plugin.java.JavaPlugin
@@ -15,8 +16,11 @@ class UltimateInventoryShopPlugin : JavaPlugin() {
     override fun onEnable() {
         instance = this
 
-        Config.readConfig(this)
+        ConfigLoader.readConfig(this)
         sqlSession = SqlFactory.initDB()
+
+        getCommand("uis")?.setExecutor(UISCommands())
+
         UltimateInventoryShop(this)
         logger.info("UltimateInventoryShop has been enabled!")
     }
