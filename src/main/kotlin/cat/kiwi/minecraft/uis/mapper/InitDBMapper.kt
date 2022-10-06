@@ -26,7 +26,7 @@ interface InitDBMapper {
             "  `been_sold` tinyint(1) NOT NULL,\n" +
             "  `create_date` datetime NOT NULL,\n" +
             "  `deal_date` datetime NOT NULL,"+
-            "  `meta` text CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NULL\n" +
+            "  `meta` text CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL\n" +
             ") ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_bin ROW_FORMAT = Compact;\n")
     fun createTable(tableName: String = "${ConfigLoader.tablePrefix}goods")
 

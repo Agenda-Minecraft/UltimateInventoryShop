@@ -1,14 +1,20 @@
 package cat.kiwi.minecraft.uis.command
 
 import cat.kiwi.minecraft.uis.UltimateInventoryShopPlugin
+import cat.kiwi.minecraft.uis.config.Lang
 import cat.kiwi.minecraft.uis.controller.InventoryListener
+import cat.kiwi.minecraft.uis.controller.SellController
+import cat.kiwi.minecraft.uis.mapper.GoodsMapper
+import cat.kiwi.minecraft.uis.service.GoodsService
+import cat.kiwi.minecraft.uis.service.impl.GoodsServiceImpl
 import org.bukkit.Material
 import org.bukkit.command.Command
 import org.bukkit.command.CommandExecutor
 import org.bukkit.command.CommandSender
 import org.bukkit.entity.Player
 
-class UISCommands: CommandExecutor {
+class UISCommands : CommandExecutor {
+
     override fun onCommand(sender: CommandSender, command: Command, label: String, args: Array<out String>): Boolean {
         if (sender !is Player) {
             UltimateInventoryShopPlugin.instance.logger.info("This command can only be used by players!")
@@ -21,7 +27,13 @@ class UISCommands: CommandExecutor {
                 val inventoryListener = InventoryListener(sender)
                 sender.openInventory(inventoryListener.inventory)
             }
+
+            "sell" -> {
+                SellController().sell(sender, args)
+            }
+
             else -> {
+
 
             }
 

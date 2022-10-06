@@ -3,6 +3,8 @@ package cat.kiwi.minecraft.uis.controller
 import cat.kiwi.minecraft.uis.config.Lang
 import cat.kiwi.minecraft.uis.config.UISMaterial
 import cat.kiwi.minecraft.uis.model.entity.ShopType
+import cat.kiwi.minecraft.uis.service.GoodsService
+import cat.kiwi.minecraft.uis.service.impl.GoodsServiceImpl
 import org.bukkit.Bukkit
 import org.bukkit.Material
 import org.bukkit.entity.Player
@@ -12,7 +14,9 @@ import org.bukkit.inventory.ItemStack
 import org.bukkit.inventory.meta.ItemMeta
 
 class InventoryListener(player: Player) : Listener {
+    private val goodsService: GoodsService = GoodsServiceImpl()
     val inventory: Inventory = Bukkit.createInventory(player, 54, Lang.uisName)
+
 
     private var sellType = ShopType.MARKET
 
@@ -40,6 +44,10 @@ class InventoryListener(player: Player) : Listener {
         inventory.setItem(7, pageIndexItemStack)
         inventory.setItem(6, previousPageItemStack)
         inventory.setItem(8, nextPageItemStack)
+    }
+    fun fillTable() {
+        val goodsList = goodsService.getGoodsByIndex(index, beenSold).list
+
     }
 
 

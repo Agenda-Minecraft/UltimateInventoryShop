@@ -24,7 +24,7 @@ dependencies {
     implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
 
     implementation("org.mybatis:mybatis:3.5.11")
-    implementation("org.mybatis:mybatis-guice:3.17")
+    implementation("com.baomidou:mybatis-plus:3.5.2")
     implementation("com.github.pagehelper:pagehelper:5.3.2")
     runtimeOnly("mysql:mysql-connector-java")
 

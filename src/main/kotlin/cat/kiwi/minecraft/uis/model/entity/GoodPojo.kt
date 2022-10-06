@@ -2,7 +2,7 @@ package cat.kiwi.minecraft.uis.model.entity
 
 import java.util.*
 
-data class Good(
+data class GoodPojo(
     val id: String,
     val putterName: String,
     val putterUid: String,
