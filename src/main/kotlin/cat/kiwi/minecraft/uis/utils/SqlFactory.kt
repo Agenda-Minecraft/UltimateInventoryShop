@@ -91,6 +91,7 @@ object SqlFactory {
     }
 
     private fun getSqlSessionWithoutBukkit(): SqlSession {
+        // 哎呀，就是内网测试数据库，先就放着了，晚点删
         val ds = PooledDataSource()
         ds.driver = "com.mysql.cj.jdbc.Driver"
         ds.url =
