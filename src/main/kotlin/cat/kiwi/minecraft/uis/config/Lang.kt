@@ -17,4 +17,5 @@ object Lang {
     lateinit var emptyInMainHand: String
     lateinit var sellSuc: String
     lateinit var sellFail: String
+    lateinit var sqlError: String
 }

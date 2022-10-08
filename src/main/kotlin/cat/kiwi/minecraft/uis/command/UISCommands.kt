@@ -1,7 +1,7 @@
 package cat.kiwi.minecraft.uis.command
 
 import cat.kiwi.minecraft.uis.UltimateInventoryShopPlugin
-import cat.kiwi.minecraft.uis.controller.ShopInventory
+import cat.kiwi.minecraft.uis.controller.InventoryBaseStructureController
 import cat.kiwi.minecraft.uis.controller.SellController
 import org.bukkit.command.Command
 import org.bukkit.command.CommandExecutor
@@ -19,8 +19,8 @@ class UISCommands : CommandExecutor {
         if (args.isEmpty()) return true
         when (args[0]) {
             "open" -> {
-                val shopInventoryListener = ShopInventory()
-                shopInventoryListener.openInventory(sender)
+                val shopInventoryListener = InventoryBaseStructureController()
+                shopInventoryListener.initStructure(sender)
             }
 
             "sell" -> {

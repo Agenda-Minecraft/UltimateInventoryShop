@@ -1,9 +1,7 @@
 package cat.kiwi.minecraft.uis.controller
 
 import cat.kiwi.minecraft.uis.config.Lang
-import cat.kiwi.minecraft.uis.consts.indexTable
-import cat.kiwi.minecraft.uis.controller.ShopInventory.Companion.nextPageItemStack
-import cat.kiwi.minecraft.uis.controller.ShopInventory.Companion.previousPageItemStack
+import cat.kiwi.minecraft.uis.utils.getUisCondition
 import org.bukkit.Material
 import org.bukkit.event.EventHandler
 import org.bukkit.event.Listener
@@ -18,14 +16,14 @@ class InventoryListener : Listener {
         if (e.currentItem!!.type == Material.AIR) {
             return
         }
+        e.isCancelled = true
 
-        when (e.currentItem!!.itemMeta!!.displayName) {
-            previousPageItemStack!!.itemMeta!!.displayName -> {
-                println("pre")
+        when (e.currentItem!!.getUisCondition()) {
+            "previousPage" -> {
             }
 
-            nextPageItemStack!!.itemMeta!!.displayName -> {
-                println("next")
+            "nextPage" -> {
+                e.isCancelled = true
             }
         }
     }

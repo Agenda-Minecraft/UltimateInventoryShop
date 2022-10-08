@@ -17,6 +17,7 @@ repositories {
     maven(url="https://hub.spigotmc.org/nexus/content/repositories/snapshots/")
     maven(url="https://oss.sonatype.org/content/repositories/snapshots")
     maven(url="https://repo.extendedclip.com/content/repositories/placeholderapi")
+    maven(url="https://repo.codemc.org/repository/maven-public/")
 }
 
 dependencies {
@@ -30,6 +31,7 @@ dependencies {
     runtimeOnly("mysql:mysql-connector-java")
 
     implementation("org.spigotmc:spigot-api:1.19.2-R0.1-SNAPSHOT")
+    implementation("de.tr7zw:item-nbt-api-plugin:2.10.0")
     implementation("me.clip:placeholderapi:2.9.2")
 }
 

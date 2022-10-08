@@ -1,5 +1,5 @@
 package cat.kiwi.minecraft.uis.consts
-val indexTable = arrayListOf<Int>(
+val indexDescriptionTable = arrayListOf<Int>(
             10,
             11,
             12,
