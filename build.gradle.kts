@@ -39,6 +39,7 @@ tasks {
     named<ShadowJar>("shadowJar") {
         archiveBaseName.set("UltimateInventoryShop")
         dependencies {
+            relocate("de.tr7zw", "cat.kiwi.external.de.tr7zw")
             exclude(dependency("org.spigotmc:spigot-api:1.19.2-R0.1-SNAPSHOT"))
             exclude(dependency("me.clip:placeholderapi:2.9.2"))
         }
