@@ -37,8 +37,7 @@ class InventoryListener : Listener {
 
                 "nextPage" -> {
                     var index = e.inventory.getUisIndex()
-                    println("current index $index")
-                    if (index >= UltimateInventoryShopPlugin.goodsService.getPageNum(false).also { println(it) }) {
+                    if (index >= UltimateInventoryShopPlugin.goodsService.getPageNum(false)) {
                         return@Runnable
                     }
                     index++

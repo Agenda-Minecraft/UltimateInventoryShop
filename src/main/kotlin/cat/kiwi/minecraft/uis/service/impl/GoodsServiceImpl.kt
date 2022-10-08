@@ -40,7 +40,7 @@ class GoodsServiceImpl : GoodsService {
         Bukkit.getScheduler().runTaskAsynchronously(UltimateInventoryShopPlugin.instance, Runnable {
             try {
                 goodsMapper.sellGoods(goodPojo)
-                UltimateInventoryShopPlugin.sqlSession.commit()
+//                UltimateInventoryShopPlugin.sqlSession.commit()
                 player.inventory.removeItem(goods)
                 player.sendMessage("${Lang.prefix}${Lang.sellSuc}")
 

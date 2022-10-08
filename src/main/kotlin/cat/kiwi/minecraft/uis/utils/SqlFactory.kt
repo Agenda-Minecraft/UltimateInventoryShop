@@ -17,6 +17,7 @@ import org.apache.ibatis.transaction.TransactionFactory
 import org.apache.ibatis.transaction.jdbc.JdbcTransactionFactory
 import java.util.*
 import javax.sql.DataSource
+import kotlin.math.max
 
 
 object SqlFactory {
@@ -59,6 +60,12 @@ object SqlFactory {
         val url = uisInstance.config.getString("dataSource.url")!!
         val user = uisInstance.config.getString("dataSource.user")!!
         val password = uisInstance.config.getString("dataSource.password")!!
+        val poolName = uisInstance.config.getString("hikari.poolName")!!
+        val minimumIdle = uisInstance.config.getInt("hikari.minimumIdle")
+        val maximumPoolSize = uisInstance.config.getInt("hikari.maximumPoolSize")
+        val connectionTimeout = uisInstance.config.getLong("hikari.connectionTimeout")
+        val idleTimeout = uisInstance.config.getLong("hikari.idleTimeout")
+        val maxLifetime = uisInstance.config.getLong("hikari.maxLifetime")
 
         driver = if (driverType.lowercase(Locale.getDefault()) == "mysql") {
             "com.mysql.cj.jdbc.Driver"
@@ -67,6 +74,14 @@ object SqlFactory {
             "com.mysql.cj.jdbc.Driver"
         }
         val hds = HikariDataSource()
+        hds.isAutoCommit = true
+        hds.poolName = poolName
+        hds.minimumIdle = minimumIdle
+        hds.idleTimeout = idleTimeout
+        hds.maximumPoolSize = maximumPoolSize
+        hds.maxLifetime = maxLifetime
+        hds.connectionTimeout = connectionTimeout
+
         hds.driverClassName = driver
         hds.jdbcUrl = url
         hds.username = user

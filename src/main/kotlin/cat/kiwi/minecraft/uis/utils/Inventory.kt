@@ -23,7 +23,6 @@ val Inventory.indexItemStack: ItemStack
     }
 
 fun Inventory.updateIndexItemStack(index: Int) {
-    println("update index $index")
     this.setItem(7, this.indexItemStack.setUisIndex(index))
 }
 

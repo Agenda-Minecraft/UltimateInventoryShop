@@ -4,6 +4,13 @@ dataSource:
   url: jdbc:mysql://localhost:3306/minecraft
   user: root
   password: cheesecake
+hikari:
+  poolName: "UISHikariCP"
+  minimumIdle: 10
+  idleTimeout: 600000
+  maximumPoolSize: 10
+  maxLifetime: 1800000
+  connectionTimeout: 30000
 lang:
   prefix: '[uis] '
   price: 价格
