@@ -4,6 +4,7 @@ import org.bukkit.inventory.MainHand
 
 object Lang {
     lateinit var prefix: String
+    lateinit var price: String
     lateinit var materialLoadError: String
     lateinit var uisName: String
     lateinit var currentGoods: String
@@ -14,4 +15,6 @@ object Lang {
     lateinit var nextPage: String
     lateinit var sellUsage: String
     lateinit var emptyInMainHand: String
+    lateinit var sellSuc: String
+    lateinit var sellFail: String
 }

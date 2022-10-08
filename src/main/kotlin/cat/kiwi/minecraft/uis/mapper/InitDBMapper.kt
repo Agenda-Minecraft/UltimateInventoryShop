@@ -14,7 +14,7 @@ interface InitDBMapper {
     fun isTableExist(tableName:String = "${ConfigLoader.tablePrefix}goods"): Int
 
     @Select("CREATE TABLE IF NOT EXISTS \${tableName}  (\n" +
-            "  `id` varchar(36) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL,\n" +
+            "  `id` varchar(36) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL PRIMARY KEY,\n" +
             "  `putter_name` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL,\n" +
             "  `putter_uid` varchar(36) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL,\n" +
             "  `caller_name` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL,\n" +

@@ -25,6 +25,7 @@ dependencies {
 
     implementation("org.mybatis:mybatis:3.5.11")
     implementation("com.baomidou:mybatis-plus:3.5.2")
+    implementation("com.zaxxer:HikariCP:5.0.1")
     implementation("com.github.pagehelper:pagehelper:5.3.2")
     runtimeOnly("mysql:mysql-connector-java")
 

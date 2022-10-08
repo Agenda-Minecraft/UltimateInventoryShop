@@ -7,6 +7,7 @@ import cat.kiwi.minecraft.uis.model.entity.GoodPojo
 import com.github.pagehelper.PageHelper
 import com.github.pagehelper.PageInfo
 import com.github.pagehelper.PageInterceptor
+import com.zaxxer.hikari.HikariDataSource
 import org.apache.ibatis.datasource.pooled.PooledDataSource
 import org.apache.ibatis.mapping.Environment
 import org.apache.ibatis.session.Configuration
@@ -65,13 +66,13 @@ object SqlFactory {
             // TODO implement sqlite
             "com.mysql.cj.jdbc.Driver"
         }
+        val hds = HikariDataSource()
+        hds.driverClassName = driver
+        hds.jdbcUrl = url
+        hds.username = user
+        hds.password = password
 
-        val ds = PooledDataSource()
-        ds.driver = driver
-        ds.url = url
-        ds.username = user
-        ds.password = password
-        return ds
+        return hds
     }
 
     private fun getSqlSessionWithoutBukkit(): SqlSession {
@@ -96,6 +97,5 @@ object SqlFactory {
         val goodsMapper = sqlSession.getMapper(GoodsMapper::class.java)
         val goods: PageInfo<GoodPojo> =
             PageHelper.startPage<GoodPojo>(1, 40).doSelectPageInfo { goodsMapper.getAllGoods(false) }
-        println(goods.list)
     }
 }

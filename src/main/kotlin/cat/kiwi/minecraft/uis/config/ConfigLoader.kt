@@ -20,9 +20,13 @@ object ConfigLoader {
             Lang.emptyInMainHand = instance.config.getString("lang.emptyInMainHand")!!
             Lang.sellUsage = instance.config.getString("lang.sellUsage")!!
             Lang.materialLoadError = instance.config.getString("lang.materialLoadError")!!
+            Lang.price = instance.config.getString("lang.price")!!
+            Lang.sellSuc = instance.config.getString("lang.sellSuc")!!
+            Lang.sellFail = instance.config.getString("lang.sellFail")!!
         } catch (e: Exception) {
             logger.warning("[UltimateInventoryShop]Config file is not correct!")
             logger.warning("[UltimateInventoryShop]配置文件读取失败")
+            UltimateInventoryShopPlugin.instance.onDisable()
 
         }
         try {

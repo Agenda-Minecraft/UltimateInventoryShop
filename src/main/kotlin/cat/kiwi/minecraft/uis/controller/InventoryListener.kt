@@ -1,54 +1,32 @@
 package cat.kiwi.minecraft.uis.controller
 
 import cat.kiwi.minecraft.uis.config.Lang
-import cat.kiwi.minecraft.uis.config.UISMaterial
-import cat.kiwi.minecraft.uis.model.entity.ShopType
-import cat.kiwi.minecraft.uis.service.GoodsService
-import cat.kiwi.minecraft.uis.service.impl.GoodsServiceImpl
-import org.bukkit.Bukkit
+import cat.kiwi.minecraft.uis.consts.indexTable
+import cat.kiwi.minecraft.uis.controller.ShopInventory.Companion.nextPageItemStack
+import cat.kiwi.minecraft.uis.controller.ShopInventory.Companion.previousPageItemStack
 import org.bukkit.Material
-import org.bukkit.entity.Player
+import org.bukkit.event.EventHandler
 import org.bukkit.event.Listener
-import org.bukkit.inventory.Inventory
-import org.bukkit.inventory.ItemStack
-import org.bukkit.inventory.meta.ItemMeta
+import org.bukkit.event.inventory.InventoryClickEvent
 
-class InventoryListener(player: Player) : Listener {
-    private val goodsService: GoodsService = GoodsServiceImpl()
-    val inventory: Inventory = Bukkit.createInventory(player, 54, Lang.uisName)
-
-
-    private var sellType = ShopType.MARKET
-
-
-    private var beenSold: Boolean = false
-    private var index: Int = 0
-
-    private var pageIndexItemStack: ItemStack = ItemStack(Material.valueOf(UISMaterial.pageIndexMaterial), 1)
-
-
-    private val previousPageItemStack: ItemStack =
-        ItemStack(Material.valueOf(UISMaterial.previousPageMaterial), 1).also {
-            it.itemMeta!!.setDisplayName(Lang.previousPage)
+class InventoryListener : Listener {
+    @EventHandler
+    fun onInventoryClickEvent(e: InventoryClickEvent) {
+        if (e.view.title != Lang.uisName) {
+            return
         }
-    private val nextPageItemStack: ItemStack = ItemStack(Material.valueOf(UISMaterial.nextPageMaterial), 1).also {
-        it.itemMeta!!.setDisplayName(Lang.nextPage)
-    }
-
-
-    init {
-        pageIndexItemStack.itemMeta = pageIndexItemStack.itemMeta.apply {
-            this!!.setDisplayName("${Lang.pageIndexName} $index")
+        if (e.currentItem!!.type == Material.AIR) {
+            return
         }
 
-        inventory.setItem(7, pageIndexItemStack)
-        inventory.setItem(6, previousPageItemStack)
-        inventory.setItem(8, nextPageItemStack)
+        when (e.currentItem!!.itemMeta!!.displayName) {
+            previousPageItemStack!!.itemMeta!!.displayName -> {
+                println("pre")
+            }
+
+            nextPageItemStack!!.itemMeta!!.displayName -> {
+                println("next")
+            }
+        }
     }
-    fun fillTable() {
-        val goodsList = goodsService.getGoodsByIndex(index, beenSold).list
-
-    }
-
-
 }

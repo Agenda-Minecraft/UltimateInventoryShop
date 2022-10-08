@@ -14,7 +14,12 @@ class SellController {
             sender.sendMessage("${Lang.sellUsage}")
             return false
         }
-        val price = args[1].toDouble()
+
+        val price = args[1].toDoubleOrNull()
+        if (price == null) {
+            sender.sendMessage("${Lang.sellUsage}")
+            return false
+        }
         val description = if (args.size > 2) {
             args[2]
         } else {
