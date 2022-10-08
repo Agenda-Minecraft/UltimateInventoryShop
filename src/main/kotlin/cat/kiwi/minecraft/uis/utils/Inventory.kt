@@ -10,8 +10,7 @@ import org.bukkit.inventory.meta.ItemMeta
 
 val Inventory.uisIndex: Int
     get() {
-        this.getItem(7)
-        return 0
+        return this.getItem(7)!!.getUisIndex()
     }
 val Inventory.beenSold: Boolean
     get() {

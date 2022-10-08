@@ -11,7 +11,7 @@ fun ItemStack.setUisCondition(condition: String, displayName: String): ItemStack
     }
 
     val nbtItem = NBTItem(this)
-    var uisMetadata = nbtItem.getCompound("uisMetadata")
+    var uisMetadata = nbtItem.getCompound("uisMeta")
     if (uisMetadata == null) {
         uisMetadata = nbtItem.addCompound("uisMeta")
     }
@@ -21,7 +21,7 @@ fun ItemStack.setUisCondition(condition: String, displayName: String): ItemStack
 
 fun ItemStack.setUisCondition(condition: String): ItemStack {
     val nbtItem = NBTItem(this)
-    var uisMetadata = nbtItem.getCompound("uisMetadata")
+    var uisMetadata = nbtItem.getCompound("uisMeta")
     if (uisMetadata == null) {
         uisMetadata = nbtItem.addCompound("uisMeta")
     }
@@ -41,7 +41,7 @@ fun ItemStack.setUisIndex(index: Int): ItemStack {
     }
 
     val nbtItem = NBTItem(this)
-    var uisMetadata = nbtItem.getCompound("uisMetadata")
+    var uisMetadata = nbtItem.getCompound("uisMeta")
     if (uisMetadata == null) {
         uisMetadata = nbtItem.addCompound("uisMeta")
     }

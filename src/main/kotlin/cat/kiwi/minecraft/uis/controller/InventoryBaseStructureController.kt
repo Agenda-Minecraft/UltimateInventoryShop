@@ -14,7 +14,7 @@ import org.bukkit.inventory.ItemStack
 
 class InventoryBaseStructureController {
     lateinit var inventory: Inventory
-    private var pageIndexItemStack: ItemStack = ItemStack(Material.valueOf(UISMaterial.pageIndexMaterial), 1).setUisIndex(0)
+    private var pageIndexItemStack: ItemStack = ItemStack(Material.valueOf(UISMaterial.pageIndexMaterial), 1).setUisIndex(1)
 
     companion object {
         val previousPageItemStack: ItemStack =
