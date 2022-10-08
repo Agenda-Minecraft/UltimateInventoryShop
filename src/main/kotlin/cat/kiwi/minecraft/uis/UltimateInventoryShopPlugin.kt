@@ -27,6 +27,7 @@ class UltimateInventoryShopPlugin : JavaPlugin() {
         try {
             sqlSession = SqlFactory.initDB()
         } catch (e: Exception) {
+            e.printStackTrace()
             logger.warning(Lang.sqlError)
             onDisable()
         }

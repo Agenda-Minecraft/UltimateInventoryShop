@@ -42,10 +42,10 @@ class GoodsServiceImpl : GoodsService {
                 goodsMapper.sellGoods(goodPojo)
                 UltimateInventoryShopPlugin.sqlSession.commit()
                 player.inventory.removeItem(goods)
-                player.sendMessage("${Lang.sellSuc}")
+                player.sendMessage("${Lang.prefix}${Lang.sellSuc}")
 
             } catch (e: Exception) {
-                player.sendMessage("${Lang.sellFail}")
+                player.sendMessage("${Lang.prefix}${Lang.sellFail}")
                 UltimateInventoryShopPlugin.instance.logger.warning(e.message)
             }
 
@@ -81,5 +81,13 @@ class GoodsServiceImpl : GoodsService {
 
     override fun queryGoods(goodUid: String): GoodPojo {
         return goodsMapper.queryGoods(goodUid)
+    }
+
+    override fun getPageNum(beenSold: Boolean): Int {
+        return goodsMapper.getCount(beenSold = beenSold) / 40 + 1
+    }
+
+    override fun getPageNum(beenSold: Boolean, player: Player): Int {
+        return goodsMapper.getCountPlayer(beenSold = beenSold, putterName = player.uniqueId.toString()) / 40 + 1
     }
 }

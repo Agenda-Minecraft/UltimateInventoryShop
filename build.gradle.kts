@@ -28,7 +28,7 @@ dependencies {
     implementation("com.baomidou:mybatis-plus:3.5.2")
     implementation("com.zaxxer:HikariCP:5.0.1")
     implementation("com.github.pagehelper:pagehelper:5.3.2")
-    runtimeOnly("mysql:mysql-connector-java")
+    runtimeOnly("mysql:mysql-connector-java:8.0.30")
 
     implementation("org.spigotmc:spigot-api:1.19.2-R0.1-SNAPSHOT")
     implementation("de.tr7zw:item-nbt-api-plugin:2.10.0")

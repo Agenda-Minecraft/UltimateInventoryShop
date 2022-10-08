@@ -1,6 +1,7 @@
 package cat.kiwi.minecraft.uis.config
 
 import cat.kiwi.minecraft.uis.UltimateInventoryShopPlugin
+import org.bukkit.Material
 
 object ConfigLoader {
     lateinit var tablePrefix: String
@@ -28,12 +29,14 @@ object ConfigLoader {
             logger.warning("[UltimateInventoryShop]Config file is not correct!")
             logger.warning("[UltimateInventoryShop]配置文件读取失败")
             UltimateInventoryShopPlugin.instance.onDisable()
-
         }
         try {
             UISMaterial.pageIndexMaterial = instance.config.getString("material.pageIndexMaterial")!!
             UISMaterial.previousPageMaterial = instance.config.getString("material.previousPageMaterial")!!
             UISMaterial.nextPageMaterial = instance.config.getString("material.nextPageMaterial")!!
+            UISMaterial.myGoods = instance.config.getString("material.myGoods")!!
+            UISMaterial.myGoodsBeenSold = instance.config.getString("material.myGoodsBeenSold")!!
+            UISMaterial.currentGoods = instance.config.getString("material.currentGoods")!!
         } catch (e: Exception) {
             logger.warning("${Lang.prefix}${Lang.materialLoadError}")
         }

@@ -2,5 +2,28 @@ dataSource:
   driver: mysql
   prefix: uis_
   url: jdbc:mysql://localhost:3306/minecraft
-  user: uis
-  password: uis
+  user: root
+  password: cheesecake
+lang:
+  prefix: '[uis] '
+  price: 价格
+  uisName: 箱子商店
+  currentGoods: 当前商品
+  myGoods: 我出售的
+  myGoodsBeenSold: 我已卖出的
+  pageIndexName: '当前页码: '
+  previousPage: 上一页
+  nextPage: 下一页
+  emptyInMainHand: 手上没有东西
+  sellUsage: /uis sell <价格> <描述>
+  materialLoadError: 材料读取失败
+  sellSuc: 出售成功
+  sellFail: 出售失败
+  sqlError: 数据库连接失败
+material:
+  pageIndexMaterial: PAPER
+  previousPageMaterial: BIRCH_BUTTON
+  nextPageMaterial: BIRCH_BUTTON
+  currentGoods: DIAMOND
+  myGoods: GRASS_BLOCK
+  myGoodsBeenSold: GOLD_INGOT

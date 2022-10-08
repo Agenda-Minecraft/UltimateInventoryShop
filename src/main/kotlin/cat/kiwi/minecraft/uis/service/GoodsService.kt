@@ -22,4 +22,7 @@ interface GoodsService {
 
     fun queryGoods(goodUid: String): GoodPojo
 
+    fun getPageNum(beenSold: Boolean): Int
+    fun getPageNum(beenSold: Boolean, player: Player): Int
+
 }
