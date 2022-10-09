@@ -40,7 +40,6 @@ class GoodsServiceImpl : GoodsService {
         Bukkit.getScheduler().runTaskAsynchronously(UltimateInventoryShopPlugin.instance, Runnable {
             try {
                 goodsMapper.sellGoods(goodPojo)
-//                UltimateInventoryShopPlugin.sqlSession.commit()
                 player.inventory.removeItem(goods)
                 player.sendMessage("${Lang.prefix}${Lang.sellSuc}")
 
@@ -89,5 +88,9 @@ class GoodsServiceImpl : GoodsService {
 
     override fun getPageNum(beenSold: Boolean, player: Player): Int {
         return goodsMapper.getCountPlayer(beenSold = beenSold, putterName = player.uniqueId.toString()) / 40 + 1
+    }
+
+    override fun getPageNum(beenSold: Boolean, playerName: String): Int {
+        return goodsMapper.getCountPlayer(beenSold = beenSold, putterName = playerName) / 40 + 1
     }
 }

@@ -20,7 +20,7 @@ class UISCommands : CommandExecutor {
         when (args[0]) {
             "open" -> {
                 val shopInventoryListener = InventoryBaseStructureController()
-                shopInventoryListener.initStructure(sender)
+                shopInventoryListener.initGeneralStructure(sender)
             }
 
             "sell" -> {

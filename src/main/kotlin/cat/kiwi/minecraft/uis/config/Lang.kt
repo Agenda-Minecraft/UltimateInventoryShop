@@ -18,4 +18,6 @@ object Lang {
     lateinit var sellSuc: String
     lateinit var sellFail: String
     lateinit var sqlError: String
+    lateinit var seller: String
+    lateinit var buyer: String
 }

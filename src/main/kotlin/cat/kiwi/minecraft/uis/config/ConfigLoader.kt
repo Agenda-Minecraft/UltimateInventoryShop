@@ -25,6 +25,8 @@ object ConfigLoader {
             Lang.sellSuc = instance.config.getString("lang.sellSuc")!!
             Lang.sellFail = instance.config.getString("lang.sellFail")!!
             Lang.sqlError = instance.config.getString("lang.sqlError")!!
+            Lang.seller = instance.config.getString("lang.seller")!!
+            Lang.buyer = instance.config.getString("lang.buyer")!!
         } catch (e: Exception) {
             logger.warning("[UltimateInventoryShop]Config file is not correct!")
             logger.warning("[UltimateInventoryShop]配置文件读取失败")

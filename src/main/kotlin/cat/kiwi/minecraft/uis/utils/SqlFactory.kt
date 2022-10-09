@@ -3,6 +3,7 @@ package cat.kiwi.minecraft.uis.utils
 import cat.kiwi.minecraft.uis.UltimateInventoryShopPlugin
 import cat.kiwi.minecraft.uis.mapper.GoodsMapper
 import cat.kiwi.minecraft.uis.mapper.InitDBMapper
+import cat.kiwi.minecraft.uis.mapper.PlayerMapper
 import cat.kiwi.minecraft.uis.model.entity.GoodPojo
 import com.github.pagehelper.PageHelper
 import com.github.pagehelper.PageInfo
@@ -50,6 +51,7 @@ object SqlFactory {
         configuration.addInterceptor(interceptor)
         configuration.addMapper(InitDBMapper::class.java)
         configuration.addMapper(GoodsMapper::class.java)
+        configuration.addMapper(PlayerMapper::class.java)
         return configuration
     }
 

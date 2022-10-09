@@ -6,8 +6,10 @@ import cat.kiwi.minecraft.uis.config.ConfigLoader
 import cat.kiwi.minecraft.uis.config.Lang
 import cat.kiwi.minecraft.uis.service.GoodsService
 import cat.kiwi.minecraft.uis.service.InitDBService
+import cat.kiwi.minecraft.uis.service.PlayerService
 import cat.kiwi.minecraft.uis.service.impl.GoodsServiceImpl
 import cat.kiwi.minecraft.uis.service.impl.InitDBServiceImpl
+import cat.kiwi.minecraft.uis.service.impl.PlayerServiceImpl
 import cat.kiwi.minecraft.uis.utils.SqlFactory
 import org.apache.ibatis.session.SqlSession
 import org.bukkit.plugin.java.JavaPlugin
@@ -18,6 +20,7 @@ class UltimateInventoryShopPlugin : JavaPlugin() {
         lateinit var sqlSession: SqlSession
         lateinit var initDBService: InitDBService
         lateinit var goodsService: GoodsService
+        lateinit var playerService: PlayerService
     }
 
     override fun onEnable() {
@@ -31,8 +34,10 @@ class UltimateInventoryShopPlugin : JavaPlugin() {
             logger.warning(Lang.sqlError)
             onDisable()
         }
+
         initDBService = InitDBServiceImpl()
         goodsService = GoodsServiceImpl()
+        playerService = PlayerServiceImpl()
 
         getCommand("uis")?.setExecutor(UISCommands())
 

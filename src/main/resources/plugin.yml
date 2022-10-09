@@ -5,6 +5,7 @@ load: STARTUP
 authors: [ moeKiwiSAMA ]
 description: UltimateShop
 api-version: 1.19
+softdepend: [PlaceholderAPI]
 commands:
   uis:
     description: Ultimate Inventory Shop

@@ -1,66 +1,44 @@
 package cat.kiwi.minecraft.uis.utils
 
 import cat.kiwi.minecraft.uis.UltimateInventoryShopPlugin
-import cat.kiwi.minecraft.uis.config.Lang
 import cat.kiwi.minecraft.uis.consts.indexDescriptionTable
+import cat.kiwi.minecraft.uis.model.entity.GoodPojo
+import cat.kiwi.minecraft.uis.model.entity.renderedGoods
+import org.bukkit.entity.Player
 import org.bukkit.inventory.Inventory
 import org.bukkit.inventory.ItemStack
-import org.bukkit.inventory.meta.ItemMeta
 
-val Inventory.uisIndex: Int
+var Inventory.specifiedPlayer: String
+    set(value) {
+        ""
+    }
     get() {
-        return this.getUisIndex()
+        return ""
     }
 
-val Inventory.status: String?
+val Inventory.pageNum: Int
     get() {
-        return this.getItem(0)!!.getUisCondition()
-    }
-
-val Inventory.indexItemStack: ItemStack
-    get() {
-        return this.getItem(7)!!
-    }
-
-fun Inventory.updateIndexItemStack(index: Int) {
-    this.setItem(7, this.indexItemStack.setUisIndex(index))
-}
-
-fun Inventory.fillTable() {
-    val goodsService = UltimateInventoryShopPlugin.goodsService
-
-
-    when (this.status) {
-        "allGoods" -> {
-            val goods = goodsService.getGoodsByIndex(this.uisIndex, false).list
-            goods.forEachIndexed { i, good ->
-                val itemStack = good.itemInfo.b64Deserialized
-                val itemMeta: ItemMeta = itemStack.itemMeta!!
-                val enhance = itemMeta.enchants
-                itemMeta.setDisplayName(itemMeta.displayName)
-                if (itemMeta.lore == null) {
-                    val loreList: MutableList<String> = mutableListOf()
-                    loreList.add("${Lang.price} ${good.price}")
-                    loreList.add(good.description)
-                    itemMeta.lore = loreList
-                } else {
-                    itemMeta.lore!!.add("${Lang.price} ${good.price}")
-                    itemMeta.lore!!.add(good.description)
-                }
-                itemStack.itemMeta = itemMeta
-                if (enhance.isNotEmpty()) {
-                    itemStack.addEnchantments(enhance)
-                }
-                this.setShopItem(i, itemStack.setItemUid(good.id))
+        val goodsService = UltimateInventoryShopPlugin.goodsService
+        return when (this.uisStatus) {
+            "allGoods" -> {
+                goodsService.getPageNum()
             }
-            // padding
-            (goods.size..40).forEach {
-                this.setShopItem(it, null)
+
+            "myGoods" -> {
+                goodsService.getPageNum(false, this.viewers[0] as Player)
+            }
+
+            "myGoodsBeenSold" -> {
+                goodsService.getPageNum(true, this.viewers[0] as Player)
+            }
+            "specifyPlayer" -> {
+                goodsService.getPageNum(false,this.specifiedPlayer )
+            }
+            else -> {
+                1
             }
         }
     }
-
-}
 
 fun Inventory.setShopItem(index: Int, itemStack: ItemStack?) {
     if (index < 0 || index > 39) {
@@ -68,3 +46,44 @@ fun Inventory.setShopItem(index: Int, itemStack: ItemStack?) {
     }
     this.setItem(indexDescriptionTable[index], itemStack)
 }
+
+fun Inventory.resetStatus(status: String) {
+    UltimateInventoryShopPlugin.instance.logger.info("resetStatus: $status")
+    this.uisStatus = status
+    this.uisIndex = 1
+    this.fillTable()
+}
+
+fun Inventory.fillAndPadding(goodPojoList: List<GoodPojo>) {
+    // fill
+    goodPojoList.forEachIndexed { i, good ->
+        this.setShopItem(i, good.renderedGoods)
+    }
+    // padding
+    (goodPojoList.size..40).forEach {
+        this.setShopItem(it, null)
+    }
+}
+
+fun Inventory.fillTable() {
+    val goodsService = UltimateInventoryShopPlugin.goodsService
+    UISLogger.debug("fillTable: ${this.uisStatus}")
+    when (this.uisStatus) {
+        "allGoods" -> {
+            val goods = goodsService.getGoodsByIndex(this.uisIndex, false).list
+            fillAndPadding(goods)
+        }
+
+        "myGoods" -> {
+            val goods = goodsService.getGoodsByPlayer(this.uisIndex, this.viewers[0] as Player).list
+            fillAndPadding(goods)
+
+        }
+
+        "myGoodsBeenSold" -> {
+            val goods = goodsService.getGoodsByPlayer(this.uisIndex, this.viewers[0] as Player, beenSold = true).list
+            fillAndPadding(goods)
+        }
+    }
+}
+

@@ -29,8 +29,17 @@ interface InitDBMapper {
             "  `meta` text CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL\n" +
             ") ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_bin ROW_FORMAT = Compact;\n")
     fun createTable(tableName: String = "${ConfigLoader.tablePrefix}goods")
+    @Select("CREATE TABLE IF NOT EXISTS \${tableName} (\n" +
+            "  `uid` varchar(36) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL PRIMARY KEY,\n" +
+            "  `name` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL,\n" +
+            "   `record_date` datetime NOT NULL\n" +
+            ") ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_bin ROW_FORMAT = Compact;\n")
+    fun createPlayerTable(tableName: String = "${ConfigLoader.tablePrefix}players")
 
     @Select("CREATE INDEX goods_index ON \${tableName} (id, putter_name, putter_uid, caller_name, caller_uid, item_tag, description, been_sold, create_date, deal_date)")
     fun createTableIndex(tableName: String = "${ConfigLoader.tablePrefix}goods")
+
+    @Select("CREATE INDEX player_index ON \${tableName} (name, uid)")
+    fun createPlayerTableIndex(tableName: String = "${ConfigLoader.tablePrefix}players")
 
 }

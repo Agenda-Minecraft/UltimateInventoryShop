@@ -36,6 +36,4 @@ interface GoodsMapper {
     fun getCount(tableName: String="${ConfigLoader.tablePrefix}goods", beenSold: Boolean=false): Int
     @Select("SELECT COUNT(1) FROM \${tableName} WHERE been_sold=#{beenSold} AND putter_name=#{putterName} ORDER BY create_date")
     fun getCountPlayer(tableName: String="${ConfigLoader.tablePrefix}goods", putterName: String, beenSold: Boolean=false): Int
-
-
 }
