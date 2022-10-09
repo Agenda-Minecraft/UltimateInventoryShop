@@ -3,6 +3,8 @@ package cat.kiwi.minecraft.uis.controller
 import cat.kiwi.minecraft.uis.UltimateInventoryShopPlugin
 import cat.kiwi.minecraft.uis.config.Lang
 import cat.kiwi.minecraft.uis.service.GoodsService
+import cat.kiwi.minecraft.uis.utils.fillTable
+import org.bukkit.Bukkit
 import org.bukkit.Material
 import org.bukkit.entity.Player
 
@@ -31,7 +33,9 @@ class SellController {
             sender.sendMessage(Lang.emptyInMainHand)
             return false
         }
-        goodsService.sellGoods(sender, itemStack, price, description)
+        Bukkit.getScheduler().runTaskAsynchronously(UltimateInventoryShopPlugin.instance, Runnable {
+            goodsService.sellGoods(sender, itemStack, price, description)
+        })
         return true
     }
 }

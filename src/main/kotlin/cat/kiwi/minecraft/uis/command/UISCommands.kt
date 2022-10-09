@@ -20,7 +20,12 @@ class UISCommands : CommandExecutor {
         when (args[0]) {
             "open" -> {
                 val shopInventoryListener = InventoryBaseStructureController()
-                shopInventoryListener.initGeneralStructure(sender)
+                if (args.size == 1) {
+                    shopInventoryListener.initGeneralStructure(sender)
+                } else {
+                    shopInventoryListener.initSpecifyStructure(sender, args[1])
+                }
+
             }
 
             "sell" -> {
@@ -28,18 +33,10 @@ class UISCommands : CommandExecutor {
             }
 
             else -> {
-
-
             }
 
         }
-
-
         return true
     }
 
 }
-
-// /uis help
-// /uis open
-// /uis sell <price> <description>

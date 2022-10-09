@@ -18,6 +18,8 @@ repositories {
     maven(url="https://oss.sonatype.org/content/repositories/snapshots")
     maven(url="https://repo.extendedclip.com/content/repositories/placeholderapi")
     maven(url="https://repo.codemc.org/repository/maven-public/")
+    maven(url="https://jitpack.io")
+
 }
 
 dependencies {
@@ -32,6 +34,7 @@ dependencies {
 
     implementation("org.spigotmc:spigot-api:1.19.2-R0.1-SNAPSHOT")
     implementation("de.tr7zw:item-nbt-api-plugin:2.10.0")
+    implementation("com.github.MilkBowl:VaultAPI:1.7.1")
     implementation("me.clip:placeholderapi:2.9.2")
 }
 
@@ -39,8 +42,9 @@ tasks {
     named<ShadowJar>("shadowJar") {
         archiveBaseName.set("UltimateInventoryShop")
         dependencies {
-            relocate("de.tr7zw", "cat.kiwi.external.de.tr7zw")
             exclude(dependency("org.spigotmc:spigot-api:1.19.2-R0.1-SNAPSHOT"))
+            exclude(dependency("de.tr7zw:item-nbt-api-plugin:2.10.0"))
+            exclude(dependency("com.github.MilkBowl:VaultAPI:1.7.1"))
             exclude(dependency("me.clip:placeholderapi:2.9.2"))
         }
     }

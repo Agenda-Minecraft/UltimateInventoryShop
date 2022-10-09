@@ -4,6 +4,7 @@ import cat.kiwi.minecraft.uis.config.Lang
 import cat.kiwi.minecraft.uis.utils.b64Deserialized
 import cat.kiwi.minecraft.uis.utils.setItemUid
 import cat.kiwi.minecraft.uis.utils.setUisCondition
+import cat.kiwi.minecraft.uis.utils.setUisItemMeta
 import org.bukkit.inventory.ItemStack
 import org.bukkit.inventory.meta.ItemMeta
 import java.util.*
@@ -33,10 +34,12 @@ val GoodPojo.renderedGoods: ItemStack
         if (itemMeta.lore == null) {
             val loreList: MutableList<String> = mutableListOf()
             loreList.add("${Lang.price} ${this.price}")
+            loreList.add("${Lang.seller} ${this.callerName}")
             loreList.add(this.description)
             itemMeta.lore = loreList
         } else {
             itemMeta.lore!!.add("${Lang.price} ${this.price}")
+            itemMeta.lore!!.add("${Lang.seller} ${this.callerName}")
             itemMeta.lore!!.add(this.description)
         }
         itemStack.itemMeta = itemMeta
@@ -44,5 +47,33 @@ val GoodPojo.renderedGoods: ItemStack
             itemStack.addEnchantments(enhance)
         }
         itemStack = itemStack.setUisCondition("goodsItem")
-        return itemStack.setItemUid(this.id)
+
+        return itemStack.setUisItemMeta(this)
+    }
+val GoodPojo.renderedGoodsBeenSold: ItemStack
+    get() {
+        var itemStack = this.itemInfo.b64Deserialized
+        val itemMeta: ItemMeta = itemStack.itemMeta!!
+        val enhance = itemMeta.enchants
+        itemMeta.setDisplayName(itemMeta.displayName)
+        if (itemMeta.lore == null) {
+            val loreList: MutableList<String> = mutableListOf()
+            loreList.add("${Lang.price} ${this.price}")
+            loreList.add("${Lang.seller} ${this.callerName}")
+            loreList.add("${Lang.buyer} ${this.putterName}")
+            loreList.add(this.description)
+            itemMeta.lore = loreList
+        } else {
+            itemMeta.lore!!.add("${Lang.price} ${this.price}")
+            itemMeta.lore!!.add("${Lang.seller} ${this.callerName}")
+            itemMeta.lore!!.add("${Lang.buyer} ${this.putterName}")
+            itemMeta.lore!!.add(this.description)
+        }
+        itemStack.itemMeta = itemMeta
+        if (enhance.isNotEmpty()) {
+            itemStack.addEnchantments(enhance)
+        }
+        itemStack = itemStack.setUisCondition("goodsItemBeenSold")
+
+        return itemStack.setUisItemMeta(this)
     }

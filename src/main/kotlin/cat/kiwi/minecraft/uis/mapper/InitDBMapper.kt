@@ -1,6 +1,6 @@
 package cat.kiwi.minecraft.uis.mapper
 
-import cat.kiwi.minecraft.uis.config.ConfigLoader
+import cat.kiwi.minecraft.uis.config.Config
 import org.apache.ibatis.annotations.Mapper
 import org.apache.ibatis.annotations.Select
 
@@ -11,7 +11,7 @@ interface InitDBMapper {
     }
 
     @Select("SELECT EXISTS(SELECT * FROM information_schema.tables WHERE table_name = #{tableName})")
-    fun isTableExist(tableName:String = "${ConfigLoader.tablePrefix}goods"): Int
+    fun isTableExist(tableName:String = "${Config.tablePrefix}goods"): Int
 
     @Select("CREATE TABLE IF NOT EXISTS \${tableName}  (\n" +
             "  `id` varchar(36) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL PRIMARY KEY,\n" +
@@ -28,18 +28,18 @@ interface InitDBMapper {
             "  `deal_date` datetime NOT NULL,"+
             "  `meta` text CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL\n" +
             ") ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_bin ROW_FORMAT = Compact;\n")
-    fun createTable(tableName: String = "${ConfigLoader.tablePrefix}goods")
+    fun createTable(tableName: String = "${Config.tablePrefix}goods")
     @Select("CREATE TABLE IF NOT EXISTS \${tableName} (\n" +
             "  `uid` varchar(36) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL PRIMARY KEY,\n" +
             "  `name` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL,\n" +
             "   `record_date` datetime NOT NULL\n" +
             ") ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_bin ROW_FORMAT = Compact;\n")
-    fun createPlayerTable(tableName: String = "${ConfigLoader.tablePrefix}players")
+    fun createPlayerTable(tableName: String = "${Config.tablePrefix}players")
 
     @Select("CREATE INDEX goods_index ON \${tableName} (id, putter_name, putter_uid, caller_name, caller_uid, item_tag, description, been_sold, create_date, deal_date)")
-    fun createTableIndex(tableName: String = "${ConfigLoader.tablePrefix}goods")
+    fun createTableIndex(tableName: String = "${Config.tablePrefix}goods")
 
     @Select("CREATE INDEX player_index ON \${tableName} (name, uid)")
-    fun createPlayerTableIndex(tableName: String = "${ConfigLoader.tablePrefix}players")
+    fun createPlayerTableIndex(tableName: String = "${Config.tablePrefix}players")
 
 }

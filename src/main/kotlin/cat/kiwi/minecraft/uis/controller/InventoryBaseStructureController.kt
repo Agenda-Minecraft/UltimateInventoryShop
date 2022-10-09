@@ -58,12 +58,12 @@ class InventoryBaseStructureController {
             inventory.fillTable()
         })
     }
+
     fun initSpecifyStructure(player: Player, targetPlayer: String) {
         inventory =
             createInventory(/* owner = */ player, /* size = */ 54, /* title = */ "${Lang.uisName} ${Lang.currentGoods}")
 
         inventory.setItem(0, statusBlock)
-        // get player from name
         inventory.setUisPlayerHead(player)
         inventory.uisIdentity = true
         inventory.uisStatus = "specifyPlayer"
@@ -77,6 +77,17 @@ class InventoryBaseStructureController {
         player.openInventory(inventory)
 
         Bukkit.getScheduler().runTaskAsynchronously(UltimateInventoryShopPlugin.instance, Runnable {
+            val tPlayerUID = UltimateInventoryShopPlugin.playerService.getPlayerUUIDByName(targetPlayer)
+            if (tPlayerUID == null) {
+                UISLogger.debug("Player $targetPlayer not found")
+                inventory.setItem(0, statusBlock.setDisplayName("${Lang.playerNotFound} $targetPlayer"))
+                inventory.uisIdentity = true
+                player.sendMessage("${Lang.prefix} ${Lang.playerNotFound}")
+                return@Runnable
+            }
+
+            inventory.uisTargetPlayerName = targetPlayer
+            inventory.uisTargetPlayerUUID = tPlayerUID
             inventory.fillTable()
         })
     }

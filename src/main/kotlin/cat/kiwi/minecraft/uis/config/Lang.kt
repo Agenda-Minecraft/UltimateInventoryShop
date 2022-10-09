@@ -3,6 +3,12 @@ package cat.kiwi.minecraft.uis.config
 import org.bukkit.inventory.MainHand
 
 object Lang {
+    lateinit var invFull: String
+    lateinit var invalidItem: String
+    lateinit var buySuc: String
+    lateinit var noEnoughMoney: String
+    lateinit var buyFail: String
+    lateinit var playerNotFound: String
     lateinit var prefix: String
     lateinit var price: String
     lateinit var materialLoadError: String

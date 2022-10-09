@@ -1,11 +1,13 @@
 package cat.kiwi.minecraft.uis.utils
 
 import cat.kiwi.minecraft.uis.config.Lang
+import cat.kiwi.minecraft.uis.model.entity.GoodPojo
 import de.tr7zw.nbtapi.NBTItem
 import org.bukkit.entity.Player
 import org.bukkit.inventory.Inventory
 import org.bukkit.inventory.ItemStack
 import org.bukkit.inventory.meta.SkullMeta
+import java.util.*
 
 
 fun ItemStack.setUisCondition(condition: String, displayName: String): ItemStack {
@@ -32,12 +34,63 @@ fun ItemStack.setUisCondition(condition: String): ItemStack {
     return nbtItem.item
 }
 
+fun ItemStack.setUisItemMeta(goodPojo: GoodPojo): ItemStack {
+    val nbtItem = NBTItem(this)
+    var uisMetadata = nbtItem.getCompound("uisMeta")
+    if (uisMetadata == null) {
+        uisMetadata = nbtItem.addCompound("uisMeta")
+    }
+    uisMetadata.setString("id", goodPojo.id)
+    uisMetadata.setString("callerName", goodPojo.callerName)
+    uisMetadata.setString("callerUid", goodPojo.callerUid)
+    uisMetadata.setString("putterName", goodPojo.putterName)
+    uisMetadata.setString("putterUid", goodPojo.putterUid)
+    return nbtItem.item
+}
+
+fun ItemStack.getUisItemMeta(key: String): String {
+    val nbtItem = NBTItem(this)
+    val uisMetadata = nbtItem.getCompound("uisMeta")
+    return uisMetadata.getString(key)
+}
+
+
 fun ItemStack.getUisCondition(): String? {
     val nbtItem = NBTItem(this)
     val uisMetadata = nbtItem.getCompound("uisMeta") ?: return null
     return uisMetadata.getString("condition")
 }
 
+var Inventory.uisTargetPlayerName: String
+    get() {
+        val nbtItem = NBTItem(this.getItem(0))
+        val uisMetadata = nbtItem.getCompound("uisMeta") ?: return ""
+        return uisMetadata.getString("targetPlayerName") ?: ""
+    }
+    set(value) {
+        val nbtItem = NBTItem(this.getItem(0))
+        var uisMetadata = nbtItem.getCompound("uisMeta")
+        if (uisMetadata == null) {
+            uisMetadata = nbtItem.addCompound("uisMeta")
+        }
+        uisMetadata.setString("targetPlayerName", value)
+        this.setItem(0, nbtItem.item)
+    }
+var Inventory.uisTargetPlayerUUID: UUID
+    get() {
+        val nbtItem = NBTItem(this.getItem(0))
+        val uisMetadata = nbtItem.getCompound("uisMeta") ?: return UUID.randomUUID()
+        return uisMetadata.getUUID("targetPlayerUUID") ?: UUID.randomUUID()
+    }
+    set(value) {
+        val nbtItem = NBTItem(this.getItem(0))
+        var uisMetadata = nbtItem.getCompound("uisMeta")
+        if (uisMetadata == null) {
+            uisMetadata = nbtItem.addCompound("uisMeta")
+        }
+        uisMetadata.setUUID("targetPlayerUUID", value)
+        this.setItem(0, nbtItem.item)
+    }
 var Inventory.uisIdentity: Boolean
     get() {
         val nbtItem = NBTItem(this.getItem(0))
@@ -73,6 +126,7 @@ var Inventory.uisStatus: String
         }
         return uisMetadata.getString("status")
     }
+
 fun ItemStack.setDisplayName(displayName: String): ItemStack {
     this.itemMeta = this.itemMeta.also { meta ->
         meta!!.setDisplayName(displayName)

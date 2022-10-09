@@ -4,6 +4,7 @@ import cat.kiwi.minecraft.uis.UltimateInventoryShopPlugin
 import cat.kiwi.minecraft.uis.utils.*
 import org.bukkit.Bukkit
 import org.bukkit.Material
+import org.bukkit.entity.Player
 import org.bukkit.event.EventHandler
 import org.bukkit.event.Listener
 import org.bukkit.event.inventory.InventoryClickEvent
@@ -50,11 +51,24 @@ class InventoryListener : Listener {
                 "myGoods" -> {
                     e.inventory.resetStatus(condition)
                 }
+
                 "myGoodsBeenSold" -> {
                     e.inventory.resetStatus(condition)
                 }
+
                 "goodsItem" -> {
-                    UltimateInventoryShopPlugin.instance.logger.info(e.currentItem.toString())
+                    when (e.inventory.uisStatus) {
+                        "allGoods" -> {
+                            Bukkit.getScheduler().runTaskAsynchronously(UltimateInventoryShopPlugin.instance, Runnable {
+                                UltimateInventoryShopPlugin.goodsService.buyGoods(
+                                    e.whoClicked as Player, e.currentItem!!.getUisItemMeta("id"), e.inventory
+                                )
+                            })
+                        }
+                        "myGoods" -> {}
+                        "myGoodsBeenSold" -> {}
+
+                    }
                 }
             }
         })

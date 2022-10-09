@@ -48,7 +48,7 @@ fun Inventory.setShopItem(index: Int, itemStack: ItemStack?) {
 }
 
 fun Inventory.resetStatus(status: String) {
-    UltimateInventoryShopPlugin.instance.logger.info("resetStatus: $status")
+    UISLogger.debug("resetStatus: $status")
     this.uisStatus = status
     this.uisIndex = 1
     this.fillTable()
@@ -82,6 +82,10 @@ fun Inventory.fillTable() {
 
         "myGoodsBeenSold" -> {
             val goods = goodsService.getGoodsByPlayer(this.uisIndex, this.viewers[0] as Player, beenSold = true).list
+            fillAndPadding(goods)
+        }
+        "specifyPlayer" -> {
+            val goods = goodsService.getGoodsByPlayer(this.uisIndex, this.uisTargetPlayerUUID).list
             fillAndPadding(goods)
         }
     }

@@ -1,8 +1,5 @@
 package cat.kiwi.minecraft.uis.utils
 
-import com.google.gson.Gson
-import com.google.gson.reflect.TypeToken
-import org.bukkit.entity.Item
 import org.bukkit.inventory.ItemStack
 import org.bukkit.util.io.BukkitObjectInputStream
 import org.bukkit.util.io.BukkitObjectOutputStream

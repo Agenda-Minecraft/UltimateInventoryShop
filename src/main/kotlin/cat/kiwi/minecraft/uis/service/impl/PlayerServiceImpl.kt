@@ -3,7 +3,7 @@ package cat.kiwi.minecraft.uis.service.impl
 import cat.kiwi.minecraft.uis.UltimateInventoryShopPlugin
 import cat.kiwi.minecraft.uis.mapper.PlayerMapper
 import cat.kiwi.minecraft.uis.service.PlayerService
-import java.util.UUID
+import java.util.*
 
 class PlayerServiceImpl: PlayerService {
     private val goodsMapper: PlayerMapper = UltimateInventoryShopPlugin.sqlSession.getMapper(PlayerMapper::class.java)
@@ -21,10 +21,12 @@ class PlayerServiceImpl: PlayerService {
     }
 
     override fun updatePlayerName(uuid: UUID, name: String) {
-        goodsMapper.updatePlayerName(uuid.toString(), name)
+        goodsMapper.updatePlayerName(uuid.toString(), name, Date())
+        UltimateInventoryShopPlugin.sqlSession.commit()
     }
 
     override fun insertPlayerName(uuid: UUID, name: String) {
-        goodsMapper.insertPlayerName(uuid.toString(), name)
+        goodsMapper.insertPlayerName(uuid.toString(), name, Date())
+        UltimateInventoryShopPlugin.sqlSession.commit()
     }
 }
