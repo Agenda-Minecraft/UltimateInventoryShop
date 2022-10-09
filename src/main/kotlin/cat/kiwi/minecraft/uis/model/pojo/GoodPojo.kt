@@ -1,8 +1,8 @@
-package cat.kiwi.minecraft.uis.model.entity
+package cat.kiwi.minecraft.uis.model.pojo
 
+import cat.kiwi.minecraft.uis.config.Config
 import cat.kiwi.minecraft.uis.config.Lang
 import cat.kiwi.minecraft.uis.utils.b64Deserialized
-import cat.kiwi.minecraft.uis.utils.setItemUid
 import cat.kiwi.minecraft.uis.utils.setUisCondition
 import cat.kiwi.minecraft.uis.utils.setUisItemMeta
 import org.bukkit.inventory.ItemStack
@@ -34,13 +34,21 @@ val GoodPojo.renderedGoods: ItemStack
         if (itemMeta.lore == null) {
             val loreList: MutableList<String> = mutableListOf()
             loreList.add("${Lang.price} ${this.price}")
-            loreList.add("${Lang.seller} ${this.callerName}")
+            if (Config.enableTax) {
+                loreList.add("${Lang.afterTax} ${this.price + this.price * Config.taxRate}")
+            }
+            loreList.add("${Lang.seller} ${this.putterName}")
             loreList.add(this.description)
             itemMeta.lore = loreList
         } else {
-            itemMeta.lore!!.add("${Lang.price} ${this.price}")
-            itemMeta.lore!!.add("${Lang.seller} ${this.callerName}")
-            itemMeta.lore!!.add(this.description)
+            val loreList = itemMeta.lore!!
+            loreList.add("${Lang.price} ${this.price}")
+            if (Config.enableTax) {
+                loreList.add("${Lang.afterTax} ${this.price + this.price * Config.taxRate}")
+            }
+            loreList.add("${Lang.seller} ${this.putterName}")
+            loreList.add(this.description)
+            itemMeta.lore = loreList
         }
         itemStack.itemMeta = itemMeta
         if (enhance.isNotEmpty()) {
@@ -59,15 +67,17 @@ val GoodPojo.renderedGoodsBeenSold: ItemStack
         if (itemMeta.lore == null) {
             val loreList: MutableList<String> = mutableListOf()
             loreList.add("${Lang.price} ${this.price}")
-            loreList.add("${Lang.seller} ${this.callerName}")
-            loreList.add("${Lang.buyer} ${this.putterName}")
+            loreList.add("${Lang.seller} ${this.putterName}")
+            loreList.add("${Lang.buyer} ${this.callerName}")
             loreList.add(this.description)
             itemMeta.lore = loreList
         } else {
-            itemMeta.lore!!.add("${Lang.price} ${this.price}")
-            itemMeta.lore!!.add("${Lang.seller} ${this.callerName}")
-            itemMeta.lore!!.add("${Lang.buyer} ${this.putterName}")
-            itemMeta.lore!!.add(this.description)
+            val loreList = itemMeta.lore!!
+            loreList.add("${Lang.price} ${this.price}")
+            loreList.add("${Lang.seller} ${this.putterName}")
+            loreList.add("${Lang.buyer} ${this.callerName}")
+            loreList.add(this.description)
+            itemMeta.lore = loreList
         }
         itemStack.itemMeta = itemMeta
         if (enhance.isNotEmpty()) {

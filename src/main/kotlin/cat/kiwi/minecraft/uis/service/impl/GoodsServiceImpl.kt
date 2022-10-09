@@ -4,12 +4,10 @@ import cat.kiwi.minecraft.uis.UltimateInventoryShopPlugin
 import cat.kiwi.minecraft.uis.config.Config
 import cat.kiwi.minecraft.uis.config.Lang
 import cat.kiwi.minecraft.uis.mapper.GoodsMapper
-import cat.kiwi.minecraft.uis.model.entity.GoodPojo
+import cat.kiwi.minecraft.uis.model.enum.ShopStatus
+import cat.kiwi.minecraft.uis.model.pojo.GoodPojo
 import cat.kiwi.minecraft.uis.service.GoodsService
-import cat.kiwi.minecraft.uis.utils.b64Deserialized
-import cat.kiwi.minecraft.uis.utils.fillTable
-import cat.kiwi.minecraft.uis.utils.serializedJson
-import cat.kiwi.minecraft.uis.utils.tag
+import cat.kiwi.minecraft.uis.utils.*
 import com.github.pagehelper.PageHelper
 import com.github.pagehelper.PageInfo
 import org.bukkit.Bukkit
@@ -22,6 +20,7 @@ import java.util.*
 class GoodsServiceImpl : GoodsService {
     private val goodsMapper: GoodsMapper = UltimateInventoryShopPlugin.sqlSession.getMapper(GoodsMapper::class.java)
     override fun sellGoods(player: Player, goods: ItemStack, price: Double, description: String) {
+
         val currentDate = Date()
         val emptyDate = Date(0)
 
@@ -71,6 +70,7 @@ class GoodsServiceImpl : GoodsService {
     }
 
     override fun buyGoods(player: Player, goodUid: String, inventory: Inventory) {
+        if(inventory.uisStatus!=ShopStatus.ALLGOODS && inventory.uisStatus!=ShopStatus.SPECIFIEDPLAYER) return
         try {
             val goodPojo = goodsMapper.queryGoods(goodUid)
 
@@ -92,7 +92,6 @@ class GoodsServiceImpl : GoodsService {
                 player.sendMessage("${Lang.prefix}${Lang.noEnoughMoney}")
                 return
             }
-
             // check player inventory is full
             if (player.inventory.firstEmpty() == -1) {
                 player.sendMessage("${Lang.prefix}${Lang.invFull}")
@@ -100,15 +99,26 @@ class GoodsServiceImpl : GoodsService {
             }
 
             goodsMapper.buyGoods(player.name, player.uniqueId.toString(), goodUid)
+            UltimateInventoryShopPlugin.sqlSession.commit()
 
             UltimateInventoryShopPlugin.economy.withdrawPlayer(player, price)
             UltimateInventoryShopPlugin.economy.depositPlayer(
-                Bukkit.getOfflinePlayer(UUID.fromString(goodPojo.putterUid)),
-                goodPojo.price
+                Bukkit.getOfflinePlayer(UUID.fromString(goodPojo.putterUid)), goodPojo.price
             )
+
             player.inventory.addItem(goodPojo.itemInfo.b64Deserialized)
             player.sendMessage("${Lang.prefix}${Lang.buySuc}")
-            UltimateInventoryShopPlugin.sqlSession.commit()
+
+            if (Config.enableTax) {
+                try {
+                    UltimateInventoryShopPlugin.economy.depositPlayer(
+                        Bukkit.getOfflinePlayer(UUID.fromString(Config.taxAccountUUID)), Config.taxRate * goodPojo.price
+                    )
+                } catch (e: Exception) {
+                    UltimateInventoryShopPlugin.instance.logger.warning(Lang.taxAccountError)
+                }
+            }
+
         } catch (e: Exception) {
             player.sendMessage("${Lang.prefix}${Lang.buyFail}")
             UltimateInventoryShopPlugin.instance.logger.warning(e.message)
@@ -136,6 +146,11 @@ class GoodsServiceImpl : GoodsService {
 
     override fun getPageNum(beenSold: Boolean, playerName: String): Int {
         return goodsMapper.getCountPlayer(beenSold = beenSold, putterName = playerName) / 40 + 1
+    }
+
+
+    override fun getPageNum(beenSold: Boolean, uuid: UUID): Int {
+        return goodsMapper.getCountPlayer(beenSold = beenSold, putterName = uuid.toString()) / 40 + 1
     }
 
     override fun getGoodsByPlayer(index: Int, uuid: UUID, beenSold: Boolean): PageInfo<GoodPojo> {

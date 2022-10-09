@@ -9,6 +9,8 @@ val ItemStack.tag: String
                 "food"
             } else if (it.isBlock) {
                 "block"
+            } else if (it.isFuel) {
+                "fuel"
             } else {
                 "other"
             }

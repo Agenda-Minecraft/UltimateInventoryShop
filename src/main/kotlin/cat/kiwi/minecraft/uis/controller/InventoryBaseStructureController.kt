@@ -3,6 +3,7 @@ package cat.kiwi.minecraft.uis.controller
 import cat.kiwi.minecraft.uis.UltimateInventoryShopPlugin
 import cat.kiwi.minecraft.uis.config.Lang
 import cat.kiwi.minecraft.uis.config.UISMaterial
+import cat.kiwi.minecraft.uis.model.enum.ShopStatus
 import cat.kiwi.minecraft.uis.utils.*
 import org.bukkit.Bukkit
 import org.bukkit.Bukkit.createInventory
@@ -40,7 +41,7 @@ class InventoryBaseStructureController {
         inventory.setItem(0, statusBlock)
         inventory.setUisPlayerHead(player)
         inventory.uisIdentity = true
-        inventory.uisStatus = "allGoods"
+        inventory.uisStatus = ShopStatus.ALLGOODS
 
         inventory.setItem(18, currentGoods)
         inventory.setItem(27, myGoods)
@@ -66,7 +67,8 @@ class InventoryBaseStructureController {
         inventory.setItem(0, statusBlock)
         inventory.setUisPlayerHead(player)
         inventory.uisIdentity = true
-        inventory.uisStatus = "specifyPlayer"
+        inventory.uisStatus = ShopStatus.SPECIFIEDPLAYER
+
 
         inventory.setItem(6, previousPageItemStack)
         inventory.setItem(7, pageIndexItemStack)

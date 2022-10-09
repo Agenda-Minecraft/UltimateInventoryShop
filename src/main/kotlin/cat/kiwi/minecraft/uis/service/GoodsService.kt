@@ -1,6 +1,6 @@
 package cat.kiwi.minecraft.uis.service
 
-import cat.kiwi.minecraft.uis.model.entity.GoodPojo
+import cat.kiwi.minecraft.uis.model.pojo.GoodPojo
 import com.github.pagehelper.PageInfo
 import org.bukkit.entity.Player
 import org.bukkit.inventory.Inventory
@@ -27,6 +27,7 @@ interface GoodsService {
 
     fun getPageNum(beenSold: Boolean=false): Int
     fun getPageNum(beenSold: Boolean=false, player: Player): Int
+    fun getPageNum(beenSold: Boolean=false, uuid: UUID): Int
     fun getPageNum(beenSold: Boolean=false, playerName: String): Int
 
 }

@@ -4,7 +4,7 @@ import cat.kiwi.minecraft.uis.UltimateInventoryShopPlugin
 import cat.kiwi.minecraft.uis.mapper.GoodsMapper
 import cat.kiwi.minecraft.uis.mapper.InitDBMapper
 import cat.kiwi.minecraft.uis.mapper.PlayerMapper
-import cat.kiwi.minecraft.uis.model.entity.GoodPojo
+import cat.kiwi.minecraft.uis.model.pojo.GoodPojo
 import com.github.pagehelper.PageHelper
 import com.github.pagehelper.PageInfo
 import com.github.pagehelper.PageInterceptor
@@ -18,7 +18,6 @@ import org.apache.ibatis.transaction.TransactionFactory
 import org.apache.ibatis.transaction.jdbc.JdbcTransactionFactory
 import java.util.*
 import javax.sql.DataSource
-import kotlin.math.max
 
 
 object SqlFactory {
@@ -58,7 +57,6 @@ object SqlFactory {
     private fun getDataSource(): DataSource {
         val uisInstance = UltimateInventoryShopPlugin.instance
         val driverType = uisInstance.config.getString("dataSource.driver")!!
-        var driver = ""
         val url = uisInstance.config.getString("dataSource.url")!!
         val user = uisInstance.config.getString("dataSource.user")!!
         val password = uisInstance.config.getString("dataSource.password")!!
@@ -69,7 +67,7 @@ object SqlFactory {
         val idleTimeout = uisInstance.config.getLong("hikari.idleTimeout")
         val maxLifetime = uisInstance.config.getLong("hikari.maxLifetime")
 
-        driver = if (driverType.lowercase(Locale.getDefault()) == "mysql") {
+        val driver = if (driverType.lowercase(Locale.getDefault()) == "mysql") {
             "com.mysql.cj.jdbc.Driver"
         } else {
             // TODO implement sqlite

@@ -43,6 +43,8 @@ object Config {
             Lang.buySuc = instance.config.getString("lang.buySuc")!!
             Lang.noEnoughMoney = instance.config.getString("lang.noEnoughMoney")!!
             Lang.invFull = instance.config.getString("lang.invFull")!!
+            Lang.taxAccountError = instance.config.getString("lang.taxAccountError")!!
+            Lang.afterTax = instance.config.getString("lang.afterTax")!!
         } catch (e: Exception) {
             logger.warning("[UltimateInventoryShop]Config file is not correct!")
             logger.warning("[UltimateInventoryShop]配置文件读取失败")

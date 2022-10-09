@@ -1,3 +1,7 @@
+debug: true
+enableTax: true
+taxAccountUUID: 36aa1900-8daa-422b-827d-16a344707ee7
+taxRate: 0.05
 dataSource:
   driver: mysql
   prefix: uis_
@@ -5,7 +9,7 @@ dataSource:
   user: root
   password: cheesecake
 hikari:
-  poolName: "UISHikariCP"
+  poolName: UISHikariCP
   minimumIdle: 10
   idleTimeout: 600000
   maximumPoolSize: 10
@@ -14,8 +18,11 @@ hikari:
 lang:
   prefix: '[uis] '
   price: 价格
+  afterTax: 税后价格
   uisName: 箱子商店
   currentGoods: 当前商品
+  seller: 卖家
+  buyer: 买家
   myGoods: 我出售的
   myGoodsBeenSold: 我已卖出的
   pageIndexName: '当前页码: '
@@ -24,9 +31,16 @@ lang:
   emptyInMainHand: 手上没有东西
   sellUsage: /uis sell <价格> <描述>
   materialLoadError: 材料读取失败
+  invalidItem: 购买失败，物品可能已经下架
   sellSuc: 出售成功
   sellFail: 出售失败
   sqlError: 数据库连接失败
+  playerNotFound: 未找到玩家
+  buyFail: 购买失败，物品可能已被他人购买
+  buySuc: 购买成功
+  noEnoughMoney: 余额不足
+  invFull: 物品栏已满
+  taxAccountError: 税收账户配置错误
 material:
   pageIndexMaterial: PAPER
   previousPageMaterial: BIRCH_BUTTON

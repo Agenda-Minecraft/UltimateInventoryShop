@@ -1,7 +1,8 @@
 package cat.kiwi.minecraft.uis.utils
 
 import cat.kiwi.minecraft.uis.config.Lang
-import cat.kiwi.minecraft.uis.model.entity.GoodPojo
+import cat.kiwi.minecraft.uis.model.enum.ShopStatus
+import cat.kiwi.minecraft.uis.model.pojo.GoodPojo
 import de.tr7zw.nbtapi.NBTItem
 import org.bukkit.entity.Player
 import org.bukkit.inventory.Inventory
@@ -106,7 +107,9 @@ var Inventory.uisIdentity: Boolean
         uisMetadata.setBoolean("identity", value)
         this.setItem(0, nbtItem.item)
     }
-var Inventory.uisStatus: String
+
+// allGoods myGoods myGoodsBeenSold specifiedPlayer
+var Inventory.uisStatus: ShopStatus
     set(value) {
         val itemStack = this.getItem(0)
         val nbtItem = NBTItem(itemStack)
@@ -114,7 +117,7 @@ var Inventory.uisStatus: String
         if (uisMetadata == null) {
             uisMetadata = nbtItem.addCompound("uisMeta")
         }
-        uisMetadata.setString("status", value)
+        uisMetadata.setString("status", value.name)
         this.setItem(0, nbtItem.item)
     }
     get() {
@@ -124,7 +127,7 @@ var Inventory.uisStatus: String
         if (uisMetadata == null) {
             uisMetadata = nbtItem.addCompound("uisMeta")
         }
-        return uisMetadata.getString("status")
+        return ShopStatus.valueOf(uisMetadata.getString("status"))
     }
 
 fun ItemStack.setDisplayName(displayName: String): ItemStack {

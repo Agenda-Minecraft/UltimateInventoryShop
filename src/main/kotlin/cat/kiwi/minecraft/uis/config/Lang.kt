@@ -3,6 +3,8 @@ package cat.kiwi.minecraft.uis.config
 import org.bukkit.inventory.MainHand
 
 object Lang {
+    lateinit var taxAccountError: String
+    lateinit var afterTax: String
     lateinit var invFull: String
     lateinit var invalidItem: String
     lateinit var buySuc: String

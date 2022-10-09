@@ -29,7 +29,7 @@ class SellController {
         }
 
         val itemStack = sender.inventory.itemInMainHand
-        if (itemStack.type == Material.AIR) {
+        if (itemStack.type.isAir) {
             sender.sendMessage(Lang.emptyInMainHand)
             return false
         }
