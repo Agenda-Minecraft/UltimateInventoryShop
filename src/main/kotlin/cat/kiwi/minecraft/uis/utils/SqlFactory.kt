@@ -14,7 +14,6 @@ import org.apache.ibatis.session.SqlSession
 import org.apache.ibatis.session.SqlSessionFactoryBuilder
 import org.apache.ibatis.transaction.TransactionFactory
 import org.apache.ibatis.transaction.jdbc.JdbcTransactionFactory
-import java.sql.SQLType
 import java.util.*
 import javax.sql.DataSource
 
@@ -68,7 +67,7 @@ object SqlFactory {
                 "com.mysql.cj.jdbc.Driver"
             }
             "postgresql" -> {
-                TableConfig.sqlType = UisSqlType.POSTGRE_SQL
+                TableConfig.sqlType = UisSqlType.POSTGRESQL
                 TableConfig.beenSold = "bool"
                 TableConfig.dateType = "date"
                 TableConfig.uidType = "uuid"

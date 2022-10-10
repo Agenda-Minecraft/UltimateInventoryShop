@@ -7,9 +7,6 @@ import org.apache.ibatis.annotations.Select
 
 @Mapper
 interface InitDBMapper {
-    fun getTablePrefix(): String {
-        return "prefix_"
-    }
 
     @Select("SELECT COUNT(*) FROM information_schema.tables WHERE table_name = #{tableName}")
     fun isTableExist(tableName: String = "${Config.tablePrefix}goods"): Int
@@ -35,7 +32,6 @@ interface InitDBMapper {
         uidType: String = TableConfig.uidType,
         nameType: String = TableConfig.nameType
     )
-
 
     @Select("CREATE INDEX IF NOT EXISTS goods_index ON \${tableName} (id, putter_name, putter_uid, caller_name, caller_uid, item_tag, been_sold, create_date, deal_date)")
     fun createTableIndex(tableName: String = "${Config.tablePrefix}goods")

@@ -17,14 +17,18 @@ class InventoryListener : Listener {
         if (e.currentItem == null) return
         if (e.currentItem!!.type.isAir) return
 
-        // prevent unknown safety issue
+        // prevent itemMovement
+        if (!e.inventory.uisIdentity) return
         if(e.currentItem!!.getUisCondition() != null) {
             e.isCancelled = true
         }
         UisLogger.debug(e.currentItem, this::class.java)
 
-        if (!e.inventory.uisIdentity) return
-        if (!e.isCancelled) e.isCancelled = true
+        // meltdown for logic error
+        if (!e.isCancelled) {
+            UisLogger.panic("InventoryClickEvent is not cancelled", this::class.java)
+            e.isCancelled = true
+        }
 
         Bukkit.getScheduler().runTaskAsynchronously(UltimateInventoryShopPlugin.instance, Runnable {
             val condition = e.currentItem!!.getUisCondition()
