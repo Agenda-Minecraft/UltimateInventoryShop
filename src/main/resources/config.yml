@@ -1,13 +1,23 @@
-debug: true
+debug: false
 enableTax: true
 taxAccountUUID: 36aa1900-8daa-422b-827d-16a344707ee7
 taxRate: 0.05
 dataSource:
-  driver: mysql
+  driver: sqlite
   prefix: uis_
-  url: jdbc:mysql://localhost:3306/minecraft
-  user: root
-  password: cheesecake
+  url: jdbc:sqlite:plugins/UltimateInventoryShop/sqlite.db
+  #
+  # driver: mysql
+  # prefix: uis_
+  # url: jdbc:mysql://localhost:3306/minecraft
+  # user: minecraft
+  # password: minecraft
+  #
+  # driver: postgresql
+  # prefix: uis_
+  # url: jdbc:postgresql://localhost:5432/postgres
+  # user: postgres
+  # password: postgres
 hikari:
   poolName: UISHikariCP
   minimumIdle: 10
@@ -41,6 +51,10 @@ lang:
   noEnoughMoney: 余额不足
   invFull: 物品栏已满
   taxAccountError: 税收账户配置错误
+  redeemSuc: 赎回成功
+  redeemFail: 赎回失败
+  cannotBuySelfGoods: 不能购买自己的商品
+  notBelongToYou: 商品不属于你
 material:
   pageIndexMaterial: PAPER
   previousPageMaterial: BIRCH_BUTTON
