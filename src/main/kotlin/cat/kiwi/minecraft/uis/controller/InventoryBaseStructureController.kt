@@ -16,7 +16,7 @@ import org.bukkit.inventory.ItemStack
 
 class InventoryBaseStructureController {
     lateinit var inventory: Inventory
-    private var pageIndexItemStack: ItemStack = ItemStack(Material.valueOf(UISMaterial.pageIndexMaterial), 1)
+    private var pageIndexItemStack: ItemStack = ItemStack(Material.valueOf(UISMaterial.pageIndexMaterial), 1).setUisCondition(UisButton.INDEX)
 
     private val previousPageItemStack: ItemStack =
         ItemStack(Material.valueOf(UISMaterial.previousPageMaterial), 1).setUisCondition(
@@ -25,7 +25,9 @@ class InventoryBaseStructureController {
     private val nextPageItemStack: ItemStack =
         ItemStack(Material.valueOf(UISMaterial.nextPageMaterial), 1).setUisCondition(UisButton.NEXT_PAGE, Lang.nextPage)
 
-    private val statusBlock: ItemStack = ItemStack(Material.PLAYER_HEAD, 1)
+    private val statusBlock: ItemStack = ItemStack(Material.PLAYER_HEAD, 1).setUisCondition(
+        UisButton.STATUS_BLOCK
+    )
     private val currentGoods: ItemStack =
         ItemStack(Material.valueOf(UISMaterial.currentGoods), 1).setUisCondition(UisButton.ALL_GOODS, Lang.currentGoods)
     private val myGoods: ItemStack =
@@ -37,7 +39,7 @@ class InventoryBaseStructureController {
 
     fun initGeneralStructure(player: Player) {
         inventory =
-            createInventory(/* owner = */ player, /* size = */ 54, /* title = */ "${Lang.uisTitle} ${Lang.currentGoods}")
+            createInventory(/* owner = */ player, /* size = */ 54, /* title = */ Lang.uisTitle)
 
         inventory.setItem(0, statusBlock)
         inventory.setUisPlayerHead(player)

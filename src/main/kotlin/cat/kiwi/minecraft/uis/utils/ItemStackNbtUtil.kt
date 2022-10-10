@@ -176,7 +176,7 @@ var Inventory.uisIndex: Int
             itemStack!!.amount = index
         }
         itemStack.itemMeta = itemStack.itemMeta.also { meta ->
-            meta!!.setDisplayName("${Lang.pageIndexName} $index")
+            meta!!.setDisplayName("${Lang.pageIndexName}$index")
         }
 
         val nbtItem = NBTItem(itemStack)

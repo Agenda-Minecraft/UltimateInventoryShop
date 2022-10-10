@@ -86,7 +86,6 @@ class InventoryListener : Listener {
                             })
                         }
 
-                        ShopStatus.MY_GOODS_BEEN_SOLD -> {}
                         ShopStatus.SPECIFIED_PLAYER -> {
                             Bukkit.getScheduler().runTaskAsynchronously(UltimateInventoryShopPlugin.instance, Runnable {
                                 UltimateInventoryShopPlugin.goodsService.buyGoods(
@@ -96,12 +95,10 @@ class InventoryListener : Listener {
 
                         }
                         else -> {
-                            UisLogger.panic("Unknown ShopStatus", this::class.java)
                         }
                     }
                 }
                 else -> {
-                    UisLogger.panic("Unknown UisButton", this::class.java)
                 }
             }
         })

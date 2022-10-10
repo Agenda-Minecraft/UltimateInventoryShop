@@ -24,7 +24,7 @@ interface InitDBMapper {
     )
 
     @Select(
-        "CREATE TABLE IF NOT EXISTS \${tableName} (\n" + "  uid \${uidType} NULL PRIMARY KEY,\n" + "  name \${nameType} NOT NULL,\n" + "   record_date \${dateType} NOT NULL\n" + ")\n"
+        "CREATE TABLE IF NOT EXISTS \${tableName} (\n" + "  uid \${uidType} NOT NULL PRIMARY KEY,\n" + "  name \${nameType} NOT NULL,\n" + "   record_date \${dateType} NOT NULL\n" + ")\n"
     )
     fun createPlayerTable(
         tableName: String = "${Config.tablePrefix}players",

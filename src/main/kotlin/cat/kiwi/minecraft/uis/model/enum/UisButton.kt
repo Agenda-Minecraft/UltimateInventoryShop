@@ -1,6 +1,8 @@
 package cat.kiwi.minecraft.uis.model.enum
 
 enum class UisButton {
+    STATUS_BLOCK,
+    INDEX,
     PREVIOUS_PAGE,
     NEXT_PAGE,
     ALL_GOODS,
