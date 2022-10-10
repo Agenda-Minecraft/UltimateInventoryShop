@@ -45,6 +45,10 @@ object Config {
             Lang.invFull = instance.config.getString("lang.invFull")!!
             Lang.taxAccountError = instance.config.getString("lang.taxAccountError")!!
             Lang.afterTax = instance.config.getString("lang.afterTax")!!
+            Lang.redeemSuc = instance.config.getString("lang.redeemSuc")!!
+            Lang.redeemFail = instance.config.getString("lang.redeemFail")!!
+            Lang.cannotBuySelfGoods = instance.config.getString("lang.cannotBuySelfGoods")!!
+            Lang.notBelongToYou = instance.config.getString("lang.notBelongToYou")!!
         } catch (e: Exception) {
             logger.warning("[UltimateInventoryShop]Config file is not correct!")
             logger.warning("[UltimateInventoryShop]配置文件读取失败")

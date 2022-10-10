@@ -13,25 +13,23 @@ val Inventory.pageNum: Int
     get() {
         val goodsService = UltimateInventoryShopPlugin.goodsService
         return when (this.uisStatus) {
-            ShopStatus.ALLGOODS -> {
+            ShopStatus.ALL_GOODS -> {
                 goodsService.getPageNum()
             }
 
-            ShopStatus.MYGOODS -> {
+            ShopStatus.MY_GOODS -> {
                 goodsService.getPageNum(false, this.viewers[0] as Player)
             }
 
-            ShopStatus.MYGOODSBEENSOLD -> {
+            ShopStatus.MY_GOODS_BEEN_SOLD -> {
                 goodsService.getPageNum(true, this.viewers[0] as Player)
             }
 
-            ShopStatus.SPECIFIEDPLAYER -> {
+            ShopStatus.SPECIFIED_PLAYER -> {
                 goodsService.getPageNum(false, this.uisTargetPlayerUUID)
             }
 
-            else -> {
-                1
-            }
+            else -> 1
         }
     }
 
@@ -43,7 +41,7 @@ fun Inventory.setShopItem(index: Int, itemStack: ItemStack?) {
 }
 
 fun Inventory.resetStatus(status: ShopStatus) {
-    UISLogger.debug("resetStatus: $status")
+    UisLogger.debug("resetStatus: $status")
     this.uisStatus = status
     this.uisIndex = 1
     this.fillTable()
@@ -66,27 +64,31 @@ fun Inventory.fillAndPadding(goodPojoList: List<GoodPojo>, beenSold: Boolean = f
 
 fun Inventory.fillTable() {
     val goodsService = UltimateInventoryShopPlugin.goodsService
-    UISLogger.debug("fillTable: ${this.uisStatus}")
+    UisLogger.debug("fillTable: ${this.uisStatus}", this::class.java)
     when (this.uisStatus) {
-        ShopStatus.ALLGOODS -> {
+        ShopStatus.ALL_GOODS -> {
             val goods = goodsService.getGoodsByIndex(this.uisIndex, false).list
             fillAndPadding(goods)
         }
 
-        ShopStatus.MYGOODS -> {
+        ShopStatus.MY_GOODS -> {
             val goods = goodsService.getGoodsByPlayer(this.uisIndex, this.viewers[0] as Player).list
             fillAndPadding(goods)
 
         }
 
-        ShopStatus.MYGOODSBEENSOLD -> {
+        ShopStatus.MY_GOODS_BEEN_SOLD -> {
             val goods = goodsService.getGoodsByPlayer(this.uisIndex, this.viewers[0] as Player, beenSold = true).list
             fillAndPadding(goods,beenSold = true)
         }
 
-        ShopStatus.SPECIFIEDPLAYER -> {
+        ShopStatus.SPECIFIED_PLAYER -> {
             val goods = goodsService.getGoodsByPlayer(this.uisIndex, this.uisTargetPlayerUUID).list
             fillAndPadding(goods)
+        }
+
+        else -> {
+            UisLogger.panic("fillTable: else", this::class.java)
         }
     }
 }

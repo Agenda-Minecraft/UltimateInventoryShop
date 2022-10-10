@@ -1,8 +1,10 @@
 package cat.kiwi.minecraft.uis.model.enum
 
-enum class ShopStatus {
+enum class UisButton {
+    PREVIOUS_PAGE,
+    NEXT_PAGE,
     ALL_GOODS,
     MY_GOODS,
     MY_GOODS_BEEN_SOLD,
-    SPECIFIED_PLAYER
+    GOODS_ITEM
 }

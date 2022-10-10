@@ -21,7 +21,7 @@ interface GoodsService {
 
     fun buyGoods(player: Player, goodUid: String, inventory: Inventory)
 
-    fun deleteGoods(player: Player, goodUid: String)
+    fun deleteGoods(player: Player, goodUid: String, inventory: Inventory)
 
     fun queryGoods(goodUid: String): GoodPojo?
 

@@ -24,7 +24,7 @@ class MojangAPI {
         return o.get("textures").asJsonObject.get("SKIN").asJsonObject.get("url").asString
     }
 
-    fun getContent(link: String?): String? {
+    private fun getContent(link: String?): String? {
         try {
             val url = URL(link)
             val conn = url.openConnection() as HttpsURLConnection

@@ -2,6 +2,7 @@ package cat.kiwi.minecraft.uis.listener
 
 import cat.kiwi.minecraft.uis.UltimateInventoryShopPlugin
 import cat.kiwi.minecraft.uis.model.enum.ShopStatus
+import cat.kiwi.minecraft.uis.model.enum.UisButton
 import cat.kiwi.minecraft.uis.utils.*
 import org.bukkit.Bukkit
 import org.bukkit.entity.Player
@@ -12,20 +13,25 @@ import org.bukkit.event.inventory.InventoryClickEvent
 class InventoryListener : Listener {
     @EventHandler
     fun onInventoryClickEvent(e: InventoryClickEvent) {
+        // basic check
         if (e.currentItem == null) return
         if (e.currentItem!!.type.isAir) return
-        UISLogger.debug(e.currentItem)
+
+        // prevent unknown safety issue
+        if(e.currentItem!!.getUisCondition() != null) {
+            e.isCancelled = true
+        }
+        UisLogger.debug(e.currentItem, this::class.java)
 
         if (!e.inventory.uisIdentity) return
-
-        e.isCancelled = true
+        if (!e.isCancelled) e.isCancelled = true
 
         Bukkit.getScheduler().runTaskAsynchronously(UltimateInventoryShopPlugin.instance, Runnable {
             val condition = e.currentItem!!.getUisCondition()
-            UISLogger.debug("condition: $condition")
-            UISLogger.debug("status : ${e.inventory.uisStatus}")
+            UisLogger.debug("condition: $condition")
+            UisLogger.debug("status : ${e.inventory.uisStatus}")
             when (condition) {
-                "previousPage" -> {
+                UisButton.PREVIOUS_PAGE -> {
                     var index = e.inventory.uisIndex
                     if (index <= 1) {
                         return@Runnable
@@ -35,9 +41,9 @@ class InventoryListener : Listener {
                     e.inventory.fillTable()
                 }
 
-                "nextPage" -> {
+                UisButton.NEXT_PAGE -> {
                     var index = e.inventory.uisIndex
-                    if (index >= UltimateInventoryShopPlugin.goodsService.getPageNum(false)) {
+                    if (index >= e.inventory.pageNum) {
                         return@Runnable
                     }
                     index++
@@ -45,30 +51,38 @@ class InventoryListener : Listener {
                     e.inventory.fillTable()
                 }
 
-                "allGoods" -> {
-                    e.inventory.resetStatus(ShopStatus.ALLGOODS)
+                UisButton.ALL_GOODS -> {
+                    e.inventory.resetStatus(ShopStatus.ALL_GOODS)
                 }
 
-                "myGoods" -> {
-                    e.inventory.resetStatus(ShopStatus.MYGOODS)
+                UisButton.MY_GOODS -> {
+                    e.inventory.resetStatus(ShopStatus.MY_GOODS)
                 }
 
-                "myGoodsBeenSold" -> {
-                    e.inventory.resetStatus(ShopStatus.MYGOODSBEENSOLD)
+                UisButton.MY_GOODS_BEEN_SOLD-> {
+                    e.inventory.resetStatus(ShopStatus.MY_GOODS_BEEN_SOLD)
                 }
 
-                "goodsItem" -> {
+                UisButton.GOODS_ITEM -> {
                     when (e.inventory.uisStatus) {
-                        ShopStatus.ALLGOODS -> {
+                        ShopStatus.ALL_GOODS -> {
                             Bukkit.getScheduler().runTaskAsynchronously(UltimateInventoryShopPlugin.instance, Runnable {
                                 UltimateInventoryShopPlugin.goodsService.buyGoods(
                                     e.whoClicked as Player, e.currentItem!!.getUisItemMeta("id"), e.inventory
                                 )
                             })
                         }
-                        ShopStatus.MYGOODS -> {}
-                        ShopStatus.MYGOODSBEENSOLD -> {}
-                        ShopStatus.SPECIFIEDPLAYER -> {
+
+                        ShopStatus.MY_GOODS -> {
+                            Bukkit.getScheduler().runTaskAsynchronously(UltimateInventoryShopPlugin.instance, Runnable {
+                                UltimateInventoryShopPlugin.goodsService.deleteGoods(
+                                    e.whoClicked as Player, e.currentItem!!.getUisItemMeta("id"), e.inventory
+                                )
+                            })
+                        }
+
+                        ShopStatus.MY_GOODS_BEEN_SOLD -> {}
+                        ShopStatus.SPECIFIED_PLAYER -> {
                             Bukkit.getScheduler().runTaskAsynchronously(UltimateInventoryShopPlugin.instance, Runnable {
                                 UltimateInventoryShopPlugin.goodsService.buyGoods(
                                     e.whoClicked as Player, e.currentItem!!.getUisItemMeta("id"), e.inventory
@@ -77,7 +91,10 @@ class InventoryListener : Listener {
 
                         }
 
+                        else -> {}
                     }
+                }
+                else -> {
                 }
             }
         })

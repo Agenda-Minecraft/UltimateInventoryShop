@@ -3,6 +3,10 @@ package cat.kiwi.minecraft.uis.config
 import org.bukkit.inventory.MainHand
 
 object Lang {
+    lateinit var notBelongToYou: String
+    lateinit var cannotBuySelfGoods: String
+    lateinit var redeemSuc: String
+    lateinit var redeemFail: String
     lateinit var taxAccountError: String
     lateinit var afterTax: String
     lateinit var invFull: String

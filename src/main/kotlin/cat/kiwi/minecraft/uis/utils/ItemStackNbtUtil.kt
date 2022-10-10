@@ -2,6 +2,7 @@ package cat.kiwi.minecraft.uis.utils
 
 import cat.kiwi.minecraft.uis.config.Lang
 import cat.kiwi.minecraft.uis.model.enum.ShopStatus
+import cat.kiwi.minecraft.uis.model.enum.UisButton
 import cat.kiwi.minecraft.uis.model.pojo.GoodPojo
 import de.tr7zw.nbtapi.NBTItem
 import org.bukkit.entity.Player
@@ -11,7 +12,7 @@ import org.bukkit.inventory.meta.SkullMeta
 import java.util.*
 
 
-fun ItemStack.setUisCondition(condition: String, displayName: String): ItemStack {
+fun ItemStack.setUisCondition(condition: UisButton, displayName: String): ItemStack {
     this.itemMeta = this.itemMeta.also { meta ->
         meta!!.setDisplayName(displayName)
     }
@@ -21,17 +22,17 @@ fun ItemStack.setUisCondition(condition: String, displayName: String): ItemStack
     if (uisMetadata == null) {
         uisMetadata = nbtItem.addCompound("uisMeta")
     }
-    uisMetadata.setString("condition", condition)
+    uisMetadata.setObject("condition", condition)
     return nbtItem.item
 }
 
-fun ItemStack.setUisCondition(condition: String): ItemStack {
+fun ItemStack.setUisCondition(condition: UisButton): ItemStack {
     val nbtItem = NBTItem(this)
     var uisMetadata = nbtItem.getCompound("uisMeta")
     if (uisMetadata == null) {
         uisMetadata = nbtItem.addCompound("uisMeta")
     }
-    uisMetadata.setString("condition", condition)
+    uisMetadata.setObject("condition", condition)
     return nbtItem.item
 }
 
@@ -55,11 +56,10 @@ fun ItemStack.getUisItemMeta(key: String): String {
     return uisMetadata.getString(key)
 }
 
-
-fun ItemStack.getUisCondition(): String? {
+fun ItemStack.getUisCondition(): UisButton? {
     val nbtItem = NBTItem(this)
     val uisMetadata = nbtItem.getCompound("uisMeta") ?: return null
-    return uisMetadata.getString("condition")
+    return uisMetadata.getObject("condition", UisButton::class.java)
 }
 
 var Inventory.uisTargetPlayerName: String
@@ -109,15 +109,15 @@ var Inventory.uisIdentity: Boolean
     }
 
 // allGoods myGoods myGoodsBeenSold specifiedPlayer
-var Inventory.uisStatus: ShopStatus
-    set(value) {
+var Inventory.uisStatus: ShopStatus?
+    set(value: ShopStatus?) {
         val itemStack = this.getItem(0)
         val nbtItem = NBTItem(itemStack)
         var uisMetadata = nbtItem.getCompound("uisMeta")
         if (uisMetadata == null) {
             uisMetadata = nbtItem.addCompound("uisMeta")
         }
-        uisMetadata.setString("status", value.name)
+        uisMetadata.setObject("status", value)
         this.setItem(0, nbtItem.item)
     }
     get() {
@@ -127,7 +127,7 @@ var Inventory.uisStatus: ShopStatus
         if (uisMetadata == null) {
             uisMetadata = nbtItem.addCompound("uisMeta")
         }
-        return ShopStatus.valueOf(uisMetadata.getString("status"))
+        return uisMetadata.getObject("status", ShopStatus::class.java)
     }
 
 fun ItemStack.setDisplayName(displayName: String): ItemStack {

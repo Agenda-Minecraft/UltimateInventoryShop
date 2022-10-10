@@ -70,7 +70,7 @@ class GoodsServiceImpl : GoodsService {
     }
 
     override fun buyGoods(player: Player, goodUid: String, inventory: Inventory) {
-        if(inventory.uisStatus!=ShopStatus.ALLGOODS && inventory.uisStatus!=ShopStatus.SPECIFIEDPLAYER) return
+        if (inventory.uisStatus != ShopStatus.ALL_GOODS && inventory.uisStatus != ShopStatus.SPECIFIED_PLAYER) return
         try {
             val goodPojo = goodsMapper.queryGoods(goodUid)
 
@@ -80,6 +80,11 @@ class GoodsServiceImpl : GoodsService {
             }
             if (goodPojo.beenSold) {
                 player.sendMessage("${Lang.prefix}${Lang.buyFail}")
+                return
+            }
+
+            if (goodPojo.putterUid == player.uniqueId.toString()) {
+                player.sendMessage("${Lang.prefix}${Lang.cannotBuySelfGoods}")
                 return
             }
 
@@ -126,10 +131,47 @@ class GoodsServiceImpl : GoodsService {
         inventory.fillTable()
     }
 
-    override fun deleteGoods(player: Player, goodUid: String) {
-        goodsMapper.deleteGoods(goodUid)
+    override fun deleteGoods(player: Player, goodUid: String, inventory: Inventory) {
+        if (inventory.uisStatus != ShopStatus.MY_GOODS) return
+        // check item
 
-        UltimateInventoryShopPlugin.sqlSession.commit()
+        val goodPojo = goodsMapper.queryGoods(goodUid)
+        if (goodPojo == null) {
+            player.sendMessage("${Lang.prefix}${Lang.invalidItem}")
+            return
+        }
+        if (goodPojo.beenSold) {
+            player.sendMessage("${Lang.prefix}${Lang.invalidItem}")
+            return
+        }
+        if (goodPojo.putterUid != player.uniqueId.toString()) {
+            player.sendMessage("${Lang.prefix}${Lang.invalidItem}")
+            return
+        }
+
+        // check inventory is full
+        if (player.inventory.firstEmpty() == -1) {
+            player.sendMessage("${Lang.prefix}${Lang.invFull}")
+            return
+        }
+
+        // last melt down prevent logic problem
+        if (goodPojo.putterUid != player.uniqueId.toString()) {
+            UisLogger.panic("delete goods logic has problem\n putter: ${goodPojo.putterUid} \n status: ${inventory.uisStatus}\n", this::class.java)
+            player.sendMessage("${Lang.prefix}${Lang.invalidItem}")
+            return
+        }
+        // do redeem
+        try {
+            goodsMapper.deleteGoods(goodUid)
+            UltimateInventoryShopPlugin.sqlSession.commit()
+            player.inventory.addItem(goodPojo.itemInfo.b64Deserialized)
+            player.sendMessage("${Lang.prefix}${Lang.redeemSuc}")
+        } catch (e: Exception) {
+            player.sendMessage("${Lang.prefix}${Lang.redeemFail}")
+            UltimateInventoryShopPlugin.instance.logger.warning(e.message)
+        }
+        inventory.fillTable()
     }
 
     override fun queryGoods(goodUid: String): GoodPojo? {

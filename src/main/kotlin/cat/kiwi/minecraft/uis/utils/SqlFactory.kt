@@ -1,21 +1,20 @@
 package cat.kiwi.minecraft.uis.utils
 
 import cat.kiwi.minecraft.uis.UltimateInventoryShopPlugin
+import cat.kiwi.minecraft.uis.config.TableConfig
 import cat.kiwi.minecraft.uis.mapper.GoodsMapper
 import cat.kiwi.minecraft.uis.mapper.InitDBMapper
 import cat.kiwi.minecraft.uis.mapper.PlayerMapper
-import cat.kiwi.minecraft.uis.model.pojo.GoodPojo
-import com.github.pagehelper.PageHelper
-import com.github.pagehelper.PageInfo
+import cat.kiwi.minecraft.uis.model.enum.UisSqlType
 import com.github.pagehelper.PageInterceptor
 import com.zaxxer.hikari.HikariDataSource
-import org.apache.ibatis.datasource.pooled.PooledDataSource
 import org.apache.ibatis.mapping.Environment
 import org.apache.ibatis.session.Configuration
 import org.apache.ibatis.session.SqlSession
 import org.apache.ibatis.session.SqlSessionFactoryBuilder
 import org.apache.ibatis.transaction.TransactionFactory
 import org.apache.ibatis.transaction.jdbc.JdbcTransactionFactory
+import java.sql.SQLType
 import java.util.*
 import javax.sql.DataSource
 
@@ -58,6 +57,41 @@ object SqlFactory {
         val uisInstance = UltimateInventoryShopPlugin.instance
         val driverType = uisInstance.config.getString("dataSource.driver")!!
         val url = uisInstance.config.getString("dataSource.url")!!
+        val driver = when (driverType.lowercase()) {
+            "mysql" -> {
+                TableConfig.sqlType = UisSqlType.MYSQL
+                TableConfig.beenSold = "tinyint(1)"
+                TableConfig.dateType = "datetime"
+                TableConfig.uidType = "varchar(36)"
+                TableConfig.priceType = "decimal(10, 2)"
+                TableConfig.nameType = "varchar(40)"
+                "com.mysql.cj.jdbc.Driver"
+            }
+            "postgresql" -> {
+                TableConfig.sqlType = UisSqlType.POSTGRE_SQL
+                TableConfig.beenSold = "bool"
+                TableConfig.dateType = "date"
+                TableConfig.uidType = "uuid"
+                TableConfig.priceType = "decimal(10, 2)"
+                TableConfig.nameType = "varchar(40)"
+                "org.postgresql.Driver"
+            }
+            else -> {
+                TableConfig.sqlType = UisSqlType.SQL_LITE
+                TableConfig.beenSold = "real"
+                TableConfig.dateType = "real"
+                TableConfig.uidType = "text"
+                TableConfig.priceType = "real"
+                TableConfig.nameType = "text"
+                "org.sqlite.JDBC"
+            }
+        }
+        if (driverType.lowercase() == "sqlite") {
+            return HikariDataSource().apply {
+                this.jdbcUrl = url
+                this.driverClassName = driver
+            }
+        }
         val user = uisInstance.config.getString("dataSource.user")!!
         val password = uisInstance.config.getString("dataSource.password")!!
         val poolName = uisInstance.config.getString("hikari.poolName")!!
@@ -67,12 +101,6 @@ object SqlFactory {
         val idleTimeout = uisInstance.config.getLong("hikari.idleTimeout")
         val maxLifetime = uisInstance.config.getLong("hikari.maxLifetime")
 
-        val driver = if (driverType.lowercase(Locale.getDefault()) == "mysql") {
-            "com.mysql.cj.jdbc.Driver"
-        } else {
-            // TODO implement sqlite
-            "com.mysql.cj.jdbc.Driver"
-        }
         val hds = HikariDataSource()
         hds.isAutoCommit = true
         hds.poolName = poolName
@@ -88,30 +116,5 @@ object SqlFactory {
         hds.password = password
 
         return hds
-    }
-
-    private fun getSqlSessionWithoutBukkit(): SqlSession {
-        // 哎呀，就是内网测试数据库，先就放着了，晚点删
-        val ds = PooledDataSource()
-        ds.driver = "com.mysql.cj.jdbc.Driver"
-        ds.url =
-            "jdbc:mysql://172.30.50.81:3390/sbtest?useUnicode=true&characterEncoding=utf-8&useSSL=false&serverTimezone=UTC"
-        ds.username = "root"
-        ds.password = "z9Kp2P5@g&T3#6kH8+"
-        val transactionFactory: TransactionFactory = JdbcTransactionFactory()
-        val environment = Environment("development", transactionFactory, ds)
-        val configuration = getConfiguration(environment)
-
-        val sqlSessionFactory = SqlSessionFactoryBuilder().build(configuration)
-
-        return sqlSessionFactory.openSession()
-    }
-
-    @JvmStatic
-    fun main(args: Array<String>) {
-        val sqlSession = getSqlSessionWithoutBukkit()
-        val goodsMapper = sqlSession.getMapper(GoodsMapper::class.java)
-        val goods: PageInfo<GoodPojo> =
-            PageHelper.startPage<GoodPojo>(1, 40).doSelectPageInfo { goodsMapper.getAllGoods(false) }
     }
 }

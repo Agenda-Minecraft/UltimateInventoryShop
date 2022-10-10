@@ -2,6 +2,7 @@ package cat.kiwi.minecraft.uis.model.pojo
 
 import cat.kiwi.minecraft.uis.config.Config
 import cat.kiwi.minecraft.uis.config.Lang
+import cat.kiwi.minecraft.uis.model.enum.UisButton
 import cat.kiwi.minecraft.uis.utils.b64Deserialized
 import cat.kiwi.minecraft.uis.utils.setUisCondition
 import cat.kiwi.minecraft.uis.utils.setUisItemMeta
@@ -54,7 +55,7 @@ val GoodPojo.renderedGoods: ItemStack
         if (enhance.isNotEmpty()) {
             itemStack.addEnchantments(enhance)
         }
-        itemStack = itemStack.setUisCondition("goodsItem")
+        itemStack = itemStack.setUisCondition(UisButton.GOODS_ITEM)
 
         return itemStack.setUisItemMeta(this)
     }
@@ -83,7 +84,7 @@ val GoodPojo.renderedGoodsBeenSold: ItemStack
         if (enhance.isNotEmpty()) {
             itemStack.addEnchantments(enhance)
         }
-        itemStack = itemStack.setUisCondition("goodsItemBeenSold")
+        itemStack = itemStack.setUisCondition(UisButton.MY_GOODS_BEEN_SOLD)
 
         return itemStack.setUisItemMeta(this)
     }

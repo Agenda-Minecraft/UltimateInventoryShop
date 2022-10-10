@@ -23,15 +23,22 @@ repositories {
 }
 
 dependencies {
+    // kotlin libs
     implementation("org.jetbrains.kotlin:kotlin-reflect")
     implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
 
+    // sql utils
     implementation("org.mybatis:mybatis:3.5.11")
     implementation("com.baomidou:mybatis-plus:3.5.2")
     implementation("com.zaxxer:HikariCP:5.0.1")
     implementation("com.github.pagehelper:pagehelper:5.3.2")
-    runtimeOnly("mysql:mysql-connector-java:8.0.30")
 
+    // sql drivers
+    runtimeOnly("mysql:mysql-connector-java:8.0.30")
+    runtimeOnly("org.xerial:sqlite-jdbc:3.39.3.0")
+    runtimeOnly("org.postgresql:postgresql:42.5.0")
+
+    // minecraft apis
     implementation("org.spigotmc:spigot-api:1.19.2-R0.1-SNAPSHOT")
     implementation("de.tr7zw:item-nbt-api-plugin:2.10.0")
     implementation("com.github.MilkBowl:VaultAPI:1.7.1")
