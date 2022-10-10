@@ -27,6 +27,7 @@ class InventoryListener : Listener {
         // meltdown for logic error
         if (!e.isCancelled) {
             UisLogger.panic("InventoryClickEvent is not cancelled", this::class.java)
+            e.whoClicked.closeInventory()
             e.isCancelled = true
         }
 
