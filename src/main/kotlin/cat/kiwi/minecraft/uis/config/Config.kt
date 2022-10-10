@@ -13,7 +13,7 @@ object Config {
     private val logger = UltimateInventoryShopPlugin.instance.logger
 
     fun readConfig(instance: UltimateInventoryShopPlugin) {
-        instance.saveConfig()
+        instance.saveDefaultConfig()
         try {
             debug = instance.config.getBoolean("debug")
             tablePrefix = instance.config.getString("dataSource.prefix")!!
