@@ -55,6 +55,7 @@ lang:
   redeemFail: 赎回失败
   cannotBuySelfGoods: 不能购买自己的商品
   notBelongToYou: 商品不属于你
+  sellPriceError: 价格不能小于0
 material:
   pageIndexMaterial: PAPER
   previousPageMaterial: BIRCH_BUTTON

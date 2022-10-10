@@ -3,9 +3,7 @@ package cat.kiwi.minecraft.uis.controller
 import cat.kiwi.minecraft.uis.UltimateInventoryShopPlugin
 import cat.kiwi.minecraft.uis.config.Lang
 import cat.kiwi.minecraft.uis.service.GoodsService
-import cat.kiwi.minecraft.uis.utils.fillTable
 import org.bukkit.Bukkit
-import org.bukkit.Material
 import org.bukkit.entity.Player
 
 class SellController {
@@ -18,8 +16,13 @@ class SellController {
         }
 
         val price = args[1].toDoubleOrNull()
+
         if (price == null) {
             sender.sendMessage("${Lang.prefix}${Lang.sellUsage}")
+            return false
+        }
+        if (price < 0.0) {
+            sender.sendMessage("${Lang.prefix}${Lang.sellPriceError}")
             return false
         }
         val description = if (args.size > 2) {
