@@ -34,20 +34,20 @@ val GoodPojo.renderedGoods: ItemStack
         itemMeta.setDisplayName(itemMeta.displayName)
         if (itemMeta.lore == null) {
             val loreList: MutableList<String> = mutableListOf()
-            loreList.add("${Lang.price} ${this.price}")
+            loreList.add("${Lang.price}${this.price}")
             if (Config.enableTax) {
                 loreList.add("${Lang.afterTax} ${this.price + this.price * Config.taxRate}")
             }
-            loreList.add("${Lang.seller} ${this.putterName}")
+            loreList.add("${Lang.seller}${this.putterName}")
             loreList.add(this.description)
             itemMeta.lore = loreList
         } else {
             val loreList = itemMeta.lore!!
-            loreList.add("${Lang.price} ${this.price}")
+            loreList.add("${Lang.price}${this.price}")
             if (Config.enableTax) {
                 loreList.add("${Lang.afterTax} ${this.price + this.price * Config.taxRate}")
             }
-            loreList.add("${Lang.seller} ${this.putterName}")
+            loreList.add("${Lang.seller}${this.putterName}")
             loreList.add(this.description)
             itemMeta.lore = loreList
         }
@@ -67,16 +67,16 @@ val GoodPojo.renderedGoodsBeenSold: ItemStack
         itemMeta.setDisplayName(itemMeta.displayName)
         if (itemMeta.lore == null) {
             val loreList: MutableList<String> = mutableListOf()
-            loreList.add("${Lang.price} ${this.price}")
-            loreList.add("${Lang.seller} ${this.putterName}")
-            loreList.add("${Lang.buyer} ${this.callerName}")
+            loreList.add("${Lang.price}${this.price}")
+            loreList.add("${Lang.seller}${this.putterName}")
+            loreList.add("${Lang.buyer}${this.callerName}")
             loreList.add(this.description)
             itemMeta.lore = loreList
         } else {
             val loreList = itemMeta.lore!!
-            loreList.add("${Lang.price} ${this.price}")
-            loreList.add("${Lang.seller} ${this.putterName}")
-            loreList.add("${Lang.buyer} ${this.callerName}")
+            loreList.add("${Lang.price}${this.price}")
+            loreList.add("${Lang.seller}${this.putterName}")
+            loreList.add("${Lang.buyer}${this.callerName}")
             loreList.add(this.description)
             itemMeta.lore = loreList
         }

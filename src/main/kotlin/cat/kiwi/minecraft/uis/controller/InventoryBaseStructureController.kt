@@ -37,7 +37,7 @@ class InventoryBaseStructureController {
 
     fun initGeneralStructure(player: Player) {
         inventory =
-            createInventory(/* owner = */ player, /* size = */ 54, /* title = */ "${Lang.uisName} ${Lang.currentGoods}")
+            createInventory(/* owner = */ player, /* size = */ 54, /* title = */ "${Lang.uisTitle} ${Lang.currentGoods}")
 
         inventory.setItem(0, statusBlock)
         inventory.setUisPlayerHead(player)
@@ -63,7 +63,7 @@ class InventoryBaseStructureController {
 
     fun initSpecifyStructure(player: Player, targetPlayer: String) {
         inventory =
-            createInventory(/* owner = */ player, /* size = */ 54, /* title = */ Lang.uisName)
+            createInventory(/* owner = */ player, /* size = */ 54, /* title = */ Lang.uisTitle)
 
         inventory.setItem(0, statusBlock)
         inventory.setUisPlayerHead(player)

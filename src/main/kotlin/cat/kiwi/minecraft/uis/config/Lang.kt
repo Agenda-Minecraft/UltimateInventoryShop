@@ -1,8 +1,10 @@
 package cat.kiwi.minecraft.uis.config
 
-import org.bukkit.inventory.MainHand
-
 object Lang {
+    lateinit var taxRateInfo: String
+    lateinit var reloadLang: String
+    lateinit var noPermission: String
+    lateinit var helpMessage: String
     lateinit var sellPriceError: String
     lateinit var notBelongToYou: String
     lateinit var cannotBuySelfGoods: String
@@ -19,7 +21,7 @@ object Lang {
     lateinit var prefix: String
     lateinit var price: String
     lateinit var materialLoadError: String
-    lateinit var uisName: String
+    lateinit var uisTitle: String
     lateinit var currentGoods: String
     lateinit var myGoods: String
     lateinit var myGoodsBeenSold: String

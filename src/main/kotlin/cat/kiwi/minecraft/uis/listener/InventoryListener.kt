@@ -95,11 +95,13 @@ class InventoryListener : Listener {
                             })
 
                         }
-
-                        else -> {}
+                        else -> {
+                            UisLogger.panic("Unknown ShopStatus", this::class.java)
+                        }
                     }
                 }
                 else -> {
+                    UisLogger.panic("Unknown UisButton", this::class.java)
                 }
             }
         })

@@ -21,7 +21,7 @@ object Config {
             taxAccountUUID = instance.config.getString("taxAccountUUID")!!
             taxRate = instance.config.getDouble("taxRate")
             Lang.prefix = instance.config.getString("lang.prefix")!!
-            Lang.uisName = instance.config.getString("lang.uisName")!!
+            Lang.uisTitle = instance.config.getString("lang.uisTitle")!!
             Lang.currentGoods = instance.config.getString("lang.currentGoods")!!
             Lang.myGoods = instance.config.getString("lang.myGoods")!!
             Lang.myGoodsBeenSold = instance.config.getString("lang.myGoodsBeenSold")!!
@@ -50,6 +50,10 @@ object Config {
             Lang.cannotBuySelfGoods = instance.config.getString("lang.cannotBuySelfGoods")!!
             Lang.notBelongToYou = instance.config.getString("lang.notBelongToYou")!!
             Lang.sellPriceError = instance.config.getString("lang.sellPriceError")!!
+            Lang.helpMessage = instance.config.getList("lang.helpMessage")!!.joinToString("\n")
+            Lang.noPermission = instance.config.getString("lang.noPermission")!!
+            Lang.reloadLang = instance.config.getString("lang.reloadLang")!!
+            Lang.taxRateInfo = instance.config.getString("lang.taxRateInfo")!!
         } catch (e: Exception) {
             logger.warning("[UltimateInventoryShop]Config file is not correct!")
             logger.warning("[UltimateInventoryShop]配置文件读取失败")

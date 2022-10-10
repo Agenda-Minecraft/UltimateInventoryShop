@@ -1,6 +1,8 @@
 package cat.kiwi.minecraft.uis.command
 
 import cat.kiwi.minecraft.uis.UltimateInventoryShopPlugin
+import cat.kiwi.minecraft.uis.config.Config
+import cat.kiwi.minecraft.uis.config.Lang
 import cat.kiwi.minecraft.uis.controller.InventoryBaseStructureController
 import cat.kiwi.minecraft.uis.controller.SellController
 import org.bukkit.command.Command
@@ -16,8 +18,11 @@ class UISCommands : CommandExecutor {
             return true
         }
 
-        if (args.isEmpty()) return true
-        when (args[0]) {
+        if (args.isEmpty()) {
+            sender.sendMessage(Lang.helpMessage)
+            return true
+        }
+        when (args[0].lowercase()) {
             "open" -> {
                 val shopInventoryListener = InventoryBaseStructureController()
                 if (args.size == 1) {
@@ -27,12 +32,28 @@ class UISCommands : CommandExecutor {
                 }
 
             }
-
             "sell" -> {
                 SellController().sell(sender, args)
             }
+            "help" -> {
+                sender.sendMessage(Lang.helpMessage)
+            }
+            "reload" -> {
+                // check permission
+                if (!sender.hasPermission("uis.reload")) {
+                    sender.sendMessage(Lang.noPermission)
+                    return true
+                }
+
+                Config.readConfig(UltimateInventoryShopPlugin.instance)
+                sender.sendMessage("${Lang.prefix}${Lang.reloadLang}")
+            }
+            "tax" -> {
+                sender.sendMessage("${Lang.prefix}${Lang.taxRateInfo}${Config.taxRate}")
+            }
 
             else -> {
+                sender.sendMessage(Lang.helpMessage)
             }
 
         }

@@ -10,6 +10,7 @@ class SellController {
     private val goodsService: GoodsService = UltimateInventoryShopPlugin.goodsService
     fun sell(sender: Player, args: Array<out String>): Boolean {
         // uis sell <price> <description>
+        // uis sell <price>
         if (args.size < 2) {
             sender.sendMessage("${Lang.prefix}${Lang.sellUsage}")
             return false
@@ -33,7 +34,7 @@ class SellController {
 
         val itemStack = sender.inventory.itemInMainHand
         if (itemStack.type.isAir) {
-            sender.sendMessage(Lang.emptyInMainHand)
+            sender.sendMessage("${Lang.prefix}${Lang.emptyInMainHand}")
             return false
         }
         Bukkit.getScheduler().runTaskAsynchronously(UltimateInventoryShopPlugin.instance, Runnable {
