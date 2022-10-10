@@ -17,14 +17,13 @@ class UISCommands : CommandExecutor {
             UltimateInventoryShopPlugin.instance.logger.info("This command can only be used by players!")
             return true
         }
-
+        val shopInventoryListener = InventoryBaseStructureController()
         if (args.isEmpty()) {
-            sender.sendMessage(Lang.helpMessage)
+            shopInventoryListener.initGeneralStructure(sender)
             return true
         }
         when (args[0].lowercase()) {
             "open" -> {
-                val shopInventoryListener = InventoryBaseStructureController()
                 if (args.size == 1) {
                     shopInventoryListener.initGeneralStructure(sender)
                 } else {

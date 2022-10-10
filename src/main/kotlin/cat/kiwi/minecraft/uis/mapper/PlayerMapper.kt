@@ -7,7 +7,7 @@ import org.apache.ibatis.annotations.Update
 import java.util.Date
 
 interface PlayerMapper {
-    @Select("SELECT uid FROM \${tableName} WHERE name = #{name}")
+    @Select("SELECT uid FROM \${tableName} WHERE name = #{name} ORDER BY record_date DESC LIMIT 1")
     fun getPlayerUUIDByName(name: String,tableName: String = "${Config.tablePrefix}players"): String?
     @Select("SELECT name FROM \${tableName} WHERE uid = #{uuid} ORDER BY record_date DESC LIMIT 1")
     fun getPlayerNameByUUID(uuid: String, tableName: String = "${Config.tablePrefix}players"): String?

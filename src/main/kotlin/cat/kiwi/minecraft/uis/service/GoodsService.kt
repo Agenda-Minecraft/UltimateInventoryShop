@@ -28,6 +28,5 @@ interface GoodsService {
     fun getPageNum(beenSold: Boolean=false): Int
     fun getPageNum(beenSold: Boolean=false, player: Player): Int
     fun getPageNum(beenSold: Boolean=false, uuid: UUID): Int
-    fun getPageNum(beenSold: Boolean=false, playerName: String): Int
 
 }

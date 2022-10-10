@@ -36,6 +36,6 @@ interface GoodsMapper {
 
     @Select("SELECT COUNT(1) FROM \${tableName} WHERE been_sold=#{beenSold}")
     fun getCount(tableName: String="${Config.tablePrefix}goods", beenSold: Boolean=false): Int
-    @Select("SELECT COUNT(1) FROM \${tableName} WHERE been_sold=#{beenSold} AND putter_name=#{putterName}")
-    fun getCountPlayer(tableName: String="${Config.tablePrefix}goods", putterName: String, beenSold: Boolean=false): Int
+    @Select("SELECT COUNT(1) FROM \${tableName} WHERE been_sold=#{beenSold} AND putter_Uid=#{putterUid}")
+    fun getCountPlayer(tableName: String="${Config.tablePrefix}goods", putterUid: String, beenSold: Boolean=false): Int
 }

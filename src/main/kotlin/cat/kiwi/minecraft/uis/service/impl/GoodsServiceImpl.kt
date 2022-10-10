@@ -183,16 +183,12 @@ class GoodsServiceImpl : GoodsService {
     }
 
     override fun getPageNum(beenSold: Boolean, player: Player): Int {
-        return goodsMapper.getCountPlayer(beenSold = beenSold, putterName = player.uniqueId.toString()) / 40 + 1
-    }
-
-    override fun getPageNum(beenSold: Boolean, playerName: String): Int {
-        return goodsMapper.getCountPlayer(beenSold = beenSold, putterName = playerName) / 40 + 1
+        return goodsMapper.getCountPlayer(beenSold = beenSold, putterUid = player.uniqueId.toString()) / 40 + 1
     }
 
 
     override fun getPageNum(beenSold: Boolean, uuid: UUID): Int {
-        return goodsMapper.getCountPlayer(beenSold = beenSold, putterName = uuid.toString()) / 40 + 1
+        return goodsMapper.getCountPlayer(beenSold = beenSold, putterUid= uuid.toString()) / 40 + 1
     }
 
     override fun getGoodsByPlayer(index: Int, uuid: UUID, beenSold: Boolean): PageInfo<GoodPojo> {
