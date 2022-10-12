@@ -8,6 +8,7 @@ class UltimateInventoryShop(private val instance: UltimateInventoryShopPlugin) {
     private val initDbService: InitDBService = UltimateInventoryShopPlugin.initDBService
     init {
         initDbService.createTableIfNotExist()
-
+        instance.server.pluginManager.registerEvents(InventoryListener(), instance)
+        instance.server.pluginManager.registerEvents(RecordListener(), instance)
     }
 }
