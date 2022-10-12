@@ -1,7 +1,8 @@
 package cat.kiwi.minecraft.uis
 
 
-import cat.kiwi.minecraft.uis.command.UISCommands
+import cat.kiwi.minecraft.uis.command.UisCommands
+import cat.kiwi.minecraft.uis.command.UisErrorCommand
 import cat.kiwi.minecraft.uis.config.Config
 import cat.kiwi.minecraft.uis.config.Lang
 import cat.kiwi.minecraft.uis.service.GoodsService
@@ -52,7 +53,7 @@ class UltimateInventoryShopPlugin : JavaPlugin() {
         goodsService = GoodsServiceImpl()
         playerService = PlayerServiceImpl()
 
-        getCommand("uis")?.setExecutor(UISCommands())
+        getCommand("uis")?.setExecutor(UisCommands())
 
         UltimateInventoryShop(this)
         tryRegisterProvider()
@@ -90,7 +91,10 @@ class UltimateInventoryShopPlugin : JavaPlugin() {
     }
 
     override fun onDisable() {
+        getCommand("uis")?.setExecutor(UisErrorCommand())
         try {
+            sqlSession.close()
+
         } catch (e: Exception) {
             e.printStackTrace()
         }
