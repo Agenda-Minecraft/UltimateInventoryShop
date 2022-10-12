@@ -1,0 +1,77 @@
+debug: false
+enableTax: true
+taxAccountUUID: 36aa1900-8daa-422b-827d-16a344707ee7
+taxRate: 0.05
+dataSource:
+  driver: sqlite
+  prefix: uis_
+  url: jdbc:sqlite:plugins/UltimateInventoryShop/sqlite.db
+  #
+  # driver: mysql
+  # prefix: uis_
+  # url: jdbc:mysql://localhost:3306/minecraft
+  # user: minecraft
+  # password: minecraft
+  #
+  # driver: postgresql
+  # prefix: uis_
+  # url: jdbc:postgresql://localhost:5432/postgres
+  # user: postgres
+  # password: postgres
+hikari:
+  poolName: UISHikariCP
+  minimumIdle: 10
+  idleTimeout: 600000
+  maximumPoolSize: 10
+  maxLifetime: 1800000
+  connectionTimeout: 30000
+lang:
+  sqlError: "SQL Connection error"
+  materialLoadError: "Material load error"
+  taxAccountError: "Tax Account Error"
+  prefix: "§6§l[UIShop] §f"
+  noPermission: "§cNo permission"
+  reloadLang: "§aLanguage file reloaded"
+  taxRateInfo: "§2Current tax rate: §e"
+  uisTitle: "§2UIShop"
+  currentGoods: "§9All Goods"
+  myGoods: "§9My Goods"
+  myGoodsBeenSold: "§9My Goods Been Sold"
+  pageIndexName: "§9Page: §9"
+  previousPage: "§9Previous Page"
+  nextPage: "§9Next Page"
+  seller: "§6Seller §f"
+  buyer: "§6Buyer §6"
+  price: "§2Price §6"
+  afterTax: "§2Price After Tax: §f"
+  emptyInMainHand: "§cEmpty in main hand"
+  sellUsage: "§2/uis sell <price> <description>"
+  invalidItem: "§cThis item has already been sold"
+  sellSuc: "§2Sell successfully"
+  sellFail: "§cSell failed"
+  playerNotFound: "§cPlayer not found"
+  buyFail: "§cPurchase failed, this item may been sold"
+  buySuc: "§2Purchase succeed"
+  noEnoughMoney: "§2No enough money"
+  invFull: "§cInventory full"
+  redeemSuc: "§2Redeem Succeed"
+  redeemFail: "§cRedeem failed"
+  cannotBuySelfGoods: "§cYou cannot buy your own goods"
+  notBelongToYou: "§cThis item does not belong to you"
+  sellPriceError: "§cSell price cannot be less than 0"
+  helpMessage:
+    - '§6§l[UIShop]'
+    - '§6§l/uis sell <price> <description(optional)> §2Sell goods in your hand'
+    - '§6§l/uis open §2open shop'
+    - '§6§l/uis open <player> §2open specified player shop'
+    - '§6§l/uis help §2show help message'
+    - '§6§l/uis reload §2reload config'
+    - '§6§l/uis tax §2get tax info'
+material:
+  pageIndexMaterial: PAPER
+  previousPageMaterial: BIRCH_BUTTON
+  nextPageMaterial: BIRCH_BUTTON
+  currentGoods: DIAMOND
+  myGoods: GRASS_BLOCK
+  myGoodsBeenSold: GOLD_INGOT
+  
