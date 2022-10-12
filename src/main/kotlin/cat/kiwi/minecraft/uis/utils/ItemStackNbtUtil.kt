@@ -94,7 +94,10 @@ var Inventory.uisTargetPlayerUUID: UUID
     }
 var Inventory.uisIdentity: Boolean
     get() {
-        val nbtItem = NBTItem(this.getItem(0))
+        val identityItem = this.getItem(0) ?: return false
+        if (identityItem.type == org.bukkit.Material.AIR) return false
+        UisLogger.debug("item0: $identityItem")
+        val nbtItem = NBTItem(identityItem)
         val uisMetadata = nbtItem.getCompound("uisMeta") ?: return false
         return uisMetadata.getBoolean("identity") ?: false
     }

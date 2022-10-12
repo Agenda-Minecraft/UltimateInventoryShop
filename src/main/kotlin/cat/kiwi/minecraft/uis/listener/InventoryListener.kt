@@ -13,16 +13,18 @@ import org.bukkit.event.inventory.InventoryClickEvent
 class InventoryListener : Listener {
     @EventHandler
     fun onInventoryClickEvent(e: InventoryClickEvent) {
+        UisLogger.debug(e.currentItem, this::class.java)
         // basic check
         if (e.currentItem == null) return
+        UisLogger.debug(e.currentItem!!.amount, this::class.java)
         if (e.currentItem!!.type.isAir) return
+        if (e.currentItem!!.amount == 0) return
 
         // prevent itemMovement
         if (!e.inventory.uisIdentity) return
-        if(e.currentItem!!.getUisCondition() != null) {
+        if (e.currentItem!!.getUisCondition() != null) {
             e.isCancelled = true
         }
-        UisLogger.debug(e.currentItem, this::class.java)
 
         // meltdown for logic error
         if (!e.isCancelled) {
@@ -64,7 +66,7 @@ class InventoryListener : Listener {
                     e.inventory.resetStatus(ShopStatus.MY_GOODS)
                 }
 
-                UisButton.MY_GOODS_BEEN_SOLD-> {
+                UisButton.MY_GOODS_BEEN_SOLD -> {
                     e.inventory.resetStatus(ShopStatus.MY_GOODS_BEEN_SOLD)
                 }
 
@@ -94,10 +96,12 @@ class InventoryListener : Listener {
                             })
 
                         }
+
                         else -> {
                         }
                     }
                 }
+
                 else -> {
                 }
             }
