@@ -1,5 +1,6 @@
 debug: false
 enableTax: true
+enablePapi: false
 taxAccountUUID: 36aa1900-8daa-422b-827d-16a344707ee7
 taxRate: 0.05
 dataSource:
@@ -36,7 +37,7 @@ lang:
   uisTitle: "§2全球商店"
   currentGoods: "§9当前商品"
   myGoods: "§9我出售的"
-  myGoodsBeenSold: "§9我已卖出的"
+  myGoodsBeenSold: "§9我出售的(已卖出)"
   pageIndexName: "§9当前页码: §9"
   previousPage: "§9上一页"
   nextPage: "§9下一页"
