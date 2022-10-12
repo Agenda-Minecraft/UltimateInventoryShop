@@ -9,8 +9,8 @@ plugins {
     id("com.github.johnrengelman.shadow") version "6.1.0"
 }
 
-group = "org.example"
-version = "1.0-SNAPSHOT"
+group = "cat.kiwi"
+version = "1.0.0-rc2"
 
 repositories {
     mavenCentral()

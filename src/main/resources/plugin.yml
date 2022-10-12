@@ -10,7 +10,4 @@ softdepend: [PlaceholderAPI]
 commands:
   uis:
     description: Ultimate Inventory Shop
-    usage: /uis help
-  ultimateinventoryshop:
-    description: Ultimate Inventory Shop
-    usage: /uis help
+    usage: 未找到经济插件(An economy plugin is required)

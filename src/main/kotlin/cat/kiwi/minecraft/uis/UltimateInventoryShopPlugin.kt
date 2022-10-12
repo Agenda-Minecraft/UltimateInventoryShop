@@ -53,8 +53,6 @@ class UltimateInventoryShopPlugin : JavaPlugin() {
         goodsService = GoodsServiceImpl()
         playerService = PlayerServiceImpl()
 
-        getCommand("uis")?.setExecutor(UisCommands())
-
         UltimateInventoryShop(this)
         tryRegisterProvider()
         logger.info("UltimateInventoryShop has been enabled!")
@@ -72,8 +70,9 @@ class UltimateInventoryShopPlugin : JavaPlugin() {
                     cancel()
                     economy = rsp.provider
                     logger.info("Provider register succeed: ${rsp.plugin.name}")
+                    getCommand("uis")?.setExecutor(UisCommands())
                 }
-                if (registerCounter > 50) {
+                if (registerCounter > 20) {
                     logger.info("Failed to register provider!")
                     cancel()
                     instance.onDisable()
