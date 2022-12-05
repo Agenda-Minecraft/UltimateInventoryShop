@@ -16,47 +16,6 @@ object Config {
     fun readConfig(instance: UltimateInventoryShopPlugin) {
         instance.saveDefaultConfig()
         val unFindConfig = mutableListOf<String>()
-        //  sqlError: "数据库连接失败"
-        //  materialLoadError: "材料读取失败"
-        //  taxAccountError: "税收账户配置错误"
-        //  prefix: "§6§l[全球商店] §f"
-        //  noPermission: "§c你没有权限执行此操作"
-        //  reloadLang: "§a语言文件已重载"
-        //  taxRateInfo: "§2当前税率: §e"
-        //  uisTitle: "§2全球商店"
-        //  currentGoods: "§9当前商品"
-        //  myGoods: "§9我出售的"
-        //  myGoodsBeenSold: "§9我出售的(已卖出)"
-        //  pageIndexName: "§9当前页码: §9"
-        //  previousPage: "§9上一页"
-        //  nextPage: "§9下一页"
-        //  seller: "§6卖家 §f"
-        //  buyer: "§6买家 §6"
-        //  price: "§2价格 §6"
-        //  afterTax: "§2税后价格: §f"
-        //  emptyInMainHand: "§c手上没有东西"
-        //  sellUsage: "§2/uis sell <价格> <描述>"
-        //  invalidItem: "§c购买失败，物品可能已经下架"
-        //  sellSuc: "§2出售成功"
-        //  sellFail: "§c出售失败"
-        //  playerNotFound: "§c未找到玩家"
-        //  buyFail: "§c购买失败，商品可能已被他人购买"
-        //  buySuc: "§2购买成功"
-        //  noEnoughMoney: "§2余额不足"
-        //  invFull: "§c物品栏已满"
-        //  redeemSuc: "§2赎回成功"
-        //  redeemFail: "§c赎回失败"
-        //  cannotBuySelfGoods: "§c不能购买自己的商品"
-        //  notBelongToYou: "§c商品不属于你"
-        //  sellPriceError: "§c价格不能小于0"
-        //  helpMessage:
-        //    - '§6§l[全球商店帮助]'
-        //    - '§6§l/uis sell <价格> <描述(可选)> §2出售手上的物品'
-        //    - '§6§l/uis open §2打开商店'
-        //    - '§6§l/uis open <玩家> §2查询某个玩家出售的物品'
-        //    - '§6§l/uis help §2查看帮助'
-        //    - '§6§l/uis reload §2重载配置'
-        //    - '§6§l/uis tax §2查看税率'
         try {
             debug = instance.config.getBoolean("debug")
             tablePrefix = instance.config.getString("dataSource.prefix")!!

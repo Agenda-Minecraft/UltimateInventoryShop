@@ -1,6 +1,7 @@
 package cat.kiwi.minecraft.uis
 
 
+import cat.kiwi.minecraft.uis.command.UisCommandCompletion
 import cat.kiwi.minecraft.uis.command.UisCommands
 import cat.kiwi.minecraft.uis.command.UisErrorCommand
 import cat.kiwi.minecraft.uis.config.Config
@@ -71,6 +72,7 @@ class UltimateInventoryShopPlugin : JavaPlugin() {
                     economy = rsp.provider
                     logger.info("Provider register succeed: ${rsp.plugin.name}")
                     getCommand("uis")?.setExecutor(UisCommands())
+                    getCommand("uis")?.setTabCompleter(UisCommandCompletion())
                 }
                 if (registerCounter > 20) {
                     logger.info("Failed to register provider!")
