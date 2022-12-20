@@ -3,6 +3,7 @@ enableTax: true
 enablePapi: false
 taxAccountUUID: 36aa1900-8daa-422b-827d-16a344707ee7
 taxRate: 0.05
+allowUnsafeEnchantments: true
 dataSource:
   driver: sqlite
   prefix: uis_

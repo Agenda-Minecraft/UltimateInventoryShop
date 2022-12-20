@@ -53,7 +53,11 @@ val GoodPojo.renderedGoods: ItemStack
         }
         itemStack.itemMeta = itemMeta
         if (enhance.isNotEmpty()) {
-            itemStack.addEnchantments(enhance)
+            if (Config.allowUnsafeEnchantments) {
+                itemStack.addUnsafeEnchantments(enhance)
+            } else {
+                itemStack.addEnchantments(enhance)
+            }
         }
         itemStack = itemStack.setUisCondition(UisButton.GOODS_ITEM)
 

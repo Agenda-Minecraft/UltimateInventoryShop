@@ -9,6 +9,7 @@ object Config {
     var enableTax: Boolean = false
     var taxRate: Double = 0.0
     var enablePapi = false
+    var allowUnsafeEnchantments = true
     lateinit var taxAccountUUID: String
 
     private val logger = UltimateInventoryShopPlugin.instance.logger
@@ -23,6 +24,7 @@ object Config {
             taxAccountUUID = instance.config.getString("taxAccountUUID")!!
             taxRate = instance.config.getDouble("taxRate")
             enablePapi = instance.config.getBoolean("enablePapi")
+            allowUnsafeEnchantments = instance.config.getBoolean("allowUnsafeEnchantments")
             Lang.prefix =
                 instance.config.getString("lang.prefix") ?: "§6§l[全球商店] §f".also { unFindConfig.add("lang.prefix") }
             Lang.uisTitle =
