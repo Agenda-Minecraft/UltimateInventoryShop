@@ -26,6 +26,7 @@ data class GoodPojo(
     val meta: String
 )
 
+fun Double.toFixed(keep: Int = 2) = String.format("%.${keep}f", this)
 val GoodPojo.renderedGoods: ItemStack
     get() {
         var itemStack = this.itemInfo.b64Deserialized
@@ -34,18 +35,18 @@ val GoodPojo.renderedGoods: ItemStack
         itemMeta.setDisplayName(itemMeta.displayName)
         if (itemMeta.lore == null) {
             val loreList: MutableList<String> = mutableListOf()
-            loreList.add("${Lang.price}${this.price}")
+            loreList.add("${Lang.price}${this.price.toFixed()}")
             if (Config.enableTax) {
-                loreList.add("${Lang.afterTax} ${this.price + this.price * Config.taxRate}")
+                loreList.add("${Lang.afterTax} ${(this.price + this.price * Config.taxRate).toFixed()}")
             }
             loreList.add("${Lang.seller}${this.putterName}")
             loreList.add(this.description)
             itemMeta.lore = loreList
         } else {
             val loreList = itemMeta.lore!!
-            loreList.add("${Lang.price}${this.price}")
+            loreList.add("${Lang.price}${this.price.toFixed()}")
             if (Config.enableTax) {
-                loreList.add("${Lang.afterTax} ${this.price + this.price * Config.taxRate}")
+                loreList.add("${Lang.afterTax} ${(this.price + this.price * Config.taxRate).toFixed()}")
             }
             loreList.add("${Lang.seller}${this.putterName}")
             loreList.add(this.description)
@@ -71,14 +72,14 @@ val GoodPojo.renderedGoodsBeenSold: ItemStack
         itemMeta.setDisplayName(itemMeta.displayName)
         if (itemMeta.lore == null) {
             val loreList: MutableList<String> = mutableListOf()
-            loreList.add("${Lang.price}${this.price}")
+            loreList.add("${Lang.price}${this.price.toFixed()}")
             loreList.add("${Lang.seller}${this.putterName}")
             loreList.add("${Lang.buyer}${this.callerName}")
             loreList.add(this.description)
             itemMeta.lore = loreList
         } else {
             val loreList = itemMeta.lore!!
-            loreList.add("${Lang.price}${this.price}")
+            loreList.add("${Lang.price}${this.price.toFixed()}")
             loreList.add("${Lang.seller}${this.putterName}")
             loreList.add("${Lang.buyer}${this.callerName}")
             loreList.add(this.description)

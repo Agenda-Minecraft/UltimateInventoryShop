@@ -10,7 +10,7 @@ plugins {
 }
 
 group = "cat.kiwi"
-version = "1.0.0-rc7"
+version = "1.1.0"
 
 repositories {
     mavenCentral()
